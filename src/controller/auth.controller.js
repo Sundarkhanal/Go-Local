@@ -1,26 +1,35 @@
-const register = (req, res) =>{
-    res.json({
-        data:"This is registerd data",
-        message:"User registered successfully",
-        status: "Ok"
-    })
+class AuthController{
+    register = (req, res, next) =>{
+            res.json({
+            data:"This is registerd data",
+            message:"User registered successfully",
+            status: "Ok"
+        })
+    }
+
+    activateUser = (req, res, next) => {
+        res.json({
+            data:"User activated successfully",
+            message:"user activated",
+            status: "Ok"
+        })
+
+    }
+
+    login = (req, res, next) => {
+        res.json({
+            data:"user loggedin",
+            message:"Loggedin successfully",
+            status:"Ok"
+        })
+    }
+
+    getLoggedInUser = (req,res, next) => {
+        
+    }
+
 }
 
-const activateUser = (req, res) => {
-    res.json({
-        data:"User activated successfully",
-        message:"user activated",
-        status: "Ok"
-    })
 
-}
 
-const login = (req, res) => {
-    res.json({
-        data:"user loggedin",
-        message:"Loggedin successfully",
-        status:"Ok"
-    })
-}
-
-module.exports = {register, activateUser, login}
+module.exports = new AuthController()

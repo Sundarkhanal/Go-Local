@@ -5,8 +5,12 @@ const errorHandler = require("../middleware/error-handler.middleware")
 const app = express()
 
 //body parsher
-app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.json({
+    limit:"5mb"
+}))
+app.use(express.urlencoded({
+    limit:"5mb"
+}))
 
 app.use('/api/v1',router);
 
