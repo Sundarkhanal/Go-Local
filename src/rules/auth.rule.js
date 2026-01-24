@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { join } = require("node:path");
+
 
 
 
@@ -12,5 +12,7 @@ const RegisterDTO = Joi.object({
     role: Joi.string().allow("customer", "admin").default("customer"),
     address:Joi.string(),
     gender:Joi.string().allow("male", "female", "others").required(),
-    image:Joi.string()
+    image:Joi.string().allow(null, '').default(null)
 })
+
+module.exports = RegisterDTO
