@@ -1,4 +1,4 @@
-
+const  {ValidationError} = require("joi");
 module.exports = (rules) => {
     return async(req, res, next) => {
         try {
@@ -11,8 +11,22 @@ module.exports = (rules) => {
             next()
             
         } catch (exception) {
-            console.log(exception);
-            next(exception) 
+            let response = exception
+            if (response instanceof ValidationError) {
+                response = {
+                    details: {},
+                    code: 400,
+                    message: "Validation Failed",
+                    status: "VALIDATION_FAILED_ERR"
+                }
+                exception.details.map((error) => {
+                    console.log(error);
+                    response.details[error.context.key] = error.message
+                })
+
+                
+            }
+            next(response) 
             
             
         }
