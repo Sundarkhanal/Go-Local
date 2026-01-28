@@ -1,8 +1,10 @@
 const express = require("express")
 const router = require("../router/router")
 const errorHandler = require("../middleware/error-handler.middleware")
+const mangoInitialize = require("./mango.config")
 
 const app = express()
+mangoInitialize()
 
 //body parsher
 app.use(express.json({
