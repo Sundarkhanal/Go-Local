@@ -1,25 +1,24 @@
-const bcrypt = require("bcryptjs");
-const { randomStringGenerater } = require("../utilities/helper");
+
+
+const UserModel = require("../models/user.model");
+const { createUser } = require("../services/user.service");
+const userService = require("../services/user.service");
 class AuthController{
-    register = (req, res, next) =>{
-        let data = req.body;
-        data.password = bcrypt.hashSync(data.password)
+    register = async(req, res, next) =>{
+        try {
+            const data = userService.transformData(req)
 
-        if (!req.file) {
-            next({code:400, details:{image:"image is required"}, mesasge:"Validation Failed", status:"VALIDATION_FAILED_ERR"})
-            
-        }else{
+            const user = await userService.createUser(data)
 
-            data.image = req.file.filename
-            data.emailVerified = false;
-            data.otp = randomStringGenerater(6).toUpperCase()
-            res.json({
-            data: data,
-            message:"User registered successfully",
-            status: "Ok"
-        })
+                res.json({
+                data: userService.getPublicUserProfile(user),
+                message:"User registered successfully",
+                status: "Ok"
+            })
 
-        }
+            }catch (exception) {
+                next(exception)
+            }
     }
 
     activateUser = (req, res, next) => {
