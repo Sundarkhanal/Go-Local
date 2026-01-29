@@ -12,6 +12,8 @@ const mangoInitialize = async() => {
         
         
     } catch (exception) {
+        console.log(exception);
+        
         console.log("****Mangodb Connection Error****");
         process.exit(0)
                
