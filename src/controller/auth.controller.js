@@ -75,21 +75,22 @@ class AuthController{
     resendActivationOTP = async(req, res, next) => {
 
         try {
-
-                const{email, otp} = req.body;
-                const userDetail = await userService.getSingleUserProfile({
+            const {email} = req.body;
+            
+            const userDetail = await userService.getSingleUserProfile({
                 email: email,
-                otp: otp
+    
 
             })
+            
 
             if (!userDetail) {
                 throw{code:404, message:"User not Found", status:"USER_NOT_FOUND_ERR"}
                 
             }
-            if (userDetail.otp !== otp) {
-                throw{code:400, details: {otp:"OTP code not found"}, message:"Incorrect OTP Code", status:"INCORRECT_OTP_ERR"}
-            }
+            // if (userDetail.otp !== otp) {
+            //     throw{code:400, details: {otp:"OTP code not found"}, message:"Incorrect OTP Code", status:"INCORRECT_OTP_ERR"}
+            // }
             const otpExpiryTime = userDetail.expiryTime.getTime() //provides timestamps
             const currentTime = Date.now();
 
@@ -107,7 +108,7 @@ class AuthController{
             }, data);
 
             await emailService.sendEmail({
-                to:user.email,
+                to:userDetail.email,
                 subject:"Re-OTP-Code",
                 message:userService.getResendActivationOTP({name: userDetail.name, otp: data.otp})
             })
