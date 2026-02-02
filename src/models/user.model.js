@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema({
     address: String,
     image:String,
     otp: String,
+    expiryTime: Date,
     status:{
         type:String,
         enum: Object.values(GeneralStatus),
