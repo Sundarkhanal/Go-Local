@@ -17,7 +17,13 @@ const smtpConfig = {
     from: process.env.SMTP_FROM
 }
 
+const appConfing = {
+    jwtSecret:process.env.JWT_SECRET
+}
+
 module.exports = {
     dbConfig,
-    smtpConfig
+    smtpConfig,
+    appConfing
+
 }

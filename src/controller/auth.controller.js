@@ -1,10 +1,27 @@
 const mailservice = require("../services/email.service")
-const UserModel = require("../models/user.model");
 const { createUser } = require("../services/user.service");
 const userService = require("../services/user.service");
 const { randomStringGenerater } = require("../utilities/helper");
 const emailService = require("../services/email.service");
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken");
+const { appConfing } = require("../config/config");
 class AuthController{
+
+    #userDetail
+    
+    async #validateUserExistsByEmail(email){
+            this.#userDetail = await userService.getSingleUserProfile({
+                email:email
+            })
+
+            if (!this.#userDetail) {
+                throw{code: 400, details:{email:"Email Not Registered yet..."}, message:"User not found", status:"USER_NOT_FOUND_ERR"}
+            }
+
+    }
+
+
     register = async(req, res, next) =>{
         try {
             const data = userService.transformData(req)
@@ -130,12 +147,36 @@ class AuthController{
 
    
 
-    login = (req, res, next) => {
-        res.json({
-            data:"user loggedin",
-            message:"Loggedin successfully",
-            status:"Ok"
-        })
+    login = async(req, res, next) => {
+        try {
+            const {email, password} = req.body;
+            await this.#validateUserExistsByEmail(email)
+
+            if (!this.#userDetail.status === 'inactive') {
+                throw{code:422, message:"User not Activated yet...", status:"USER_NOT_ACTIVATED_ERR"}
+                
+            }
+
+            if (!bcrypt.compareSync(password, this.#userDetail.password)) {
+                throw{code: 422, message:"Credintials doesnot match", status:"INVALID_CREDINTIALS-ERR"}
+            }
+            
+            const token = jwt.sign({sub: this.#userDetail._id}, appConfing.jwtSecret, {expiresIn:"1d"})
+            res.cookie("Authorization", "Bearer"+token, {maxAge: 600000, httpOnly: true})
+
+            res.json({
+                data: token,
+                message:"You are loggedIn",
+                status:"OK"
+            })
+
+
+
+        } catch (exception) {
+            next(exception)
+            
+        }
+        
     }
 
     getLoggedInUser = (req,res, next) => {
