@@ -180,6 +180,12 @@ class AuthController{
     }
 
     getLoggedInUser = (req,res, next) => {
+        res.json({
+            data: req.loggedInUser,
+            message:"Your Details",
+            status:"Ok"
+        })
+
         
     }
 

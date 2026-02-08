@@ -1,9 +1,13 @@
 const express = require("express")
 const router = require("../router/router")
+const cookieParser = require("cookie-parser")
 const errorHandler = require("../middleware/error-handler.middleware")
 const mangoInitialize = require("./mango.config")
 
 const app = express()
+
+app.use(cookieParser())
+
 mangoInitialize()
 
 //body parsher
