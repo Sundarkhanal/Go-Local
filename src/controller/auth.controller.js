@@ -189,6 +189,34 @@ class AuthController{
         
     }
 
+    forgetPassword = async(req, res, next) => {
+        try {
+            const {email} = req. body
+            await this.#validateUserExistsByEmail(email)
+
+            const resetToken = randomStringGenerater(6).toUpperCase()
+            const expiryTime = new Date(Date.now()+6000)
+
+            await userService.updateSingleProfile({_id: this.#userDetail._id}, {
+                passwordResetToken : resetToken,
+                passwordResetExpiry: expiryTime
+            })
+
+            await emailService.sendEmail({
+                to:this.#userDetail.email,
+                subject:"Reset Your Password",
+                message:userService.getResetPasswordMessage({
+                    name:this.#userDetail.name,
+                    resetLink:`http://localhost:9005/ap1/v1/forget-password?token = ${passwordResetToken}`
+                })
+            })
+
+            
+        } catch (exception) {
+            next(exception)
+        }
+    }
+
 }
 
 

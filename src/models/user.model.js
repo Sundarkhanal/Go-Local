@@ -39,6 +39,8 @@ const UserSchema = new mongoose.Schema({
         type:String,
         enum:Object.values(Gender)
     },
+    passwordResetToken:String,
+    passwordResetExpiry: Date,
 }, {
     timestamps:true,
     autoCreate:true,
