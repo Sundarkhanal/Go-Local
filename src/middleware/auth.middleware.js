@@ -3,7 +3,7 @@ const { appConfing } = require("../config/config")
 const userService = require("../services/user.service")
 module.exports = async(req, res, next) => {
     try {
-        let token = req.cookies.Authorization ?? req.headers["authoriaztion"]
+        let token = req.cookies.Authorization ?? req.headers["authorization"]
         if (!token) {
             throw{code: 401, message:"Not authorized", status:"USER_NOT_AUTHORIZED"}
             
@@ -12,6 +12,7 @@ module.exports = async(req, res, next) => {
         const data = jwt.verify( token, appConfing.jwtSecret)
         const userDetail = await userService.getSingleUserProfile({_id: data.sub});
         req.loggedInUser = userService.getPublicUserProfile(userDetail);
+        next()
         
     } catch (exception) {
         let errMsg = exception
