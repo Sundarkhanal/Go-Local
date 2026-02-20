@@ -6,6 +6,7 @@ const emailService = require("../services/email.service");
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken");
 const { appConfing } = require("../config/config");
+const crypto = require("crypto")
 class AuthController{
 
     #userDetail
@@ -195,7 +196,8 @@ class AuthController{
             await this.#validateUserExistsByEmail(email)
 
             const resetToken = randomStringGenerater(6).toUpperCase()
-            const expiryTime = new Date(Date.now()+15*60*6000)
+            const expiryTime = new Date(Date.now()+15*60*1000)
+            
 
             await userService.updateSingleProfile({_id: this.#userDetail._id}, {
                 passwordResetToken: resetToken,
@@ -207,7 +209,7 @@ class AuthController{
                 subject:"Reset Your Password",
                 message:userService.getResetPasswordMessage({
                     name:this.#userDetail.name,
-                    resetLink:`http://localhost:9005/ap1/v1/reset-password?token = ${resetToken}`
+                    resetLink:`http://localhost:9005/api/v1/reset-password?token=${encodeURIComponent(resetToken)}`
                 })
             })
             res.json({
@@ -221,45 +223,44 @@ class AuthController{
         }
     }
 
-    resetPassword = async(req, res, next) =>{
-        try {
-            const {token, newpassword} = req.body
-            
+   resetPassword = async (req, res, next) => {
+    try {
+        const { token, newpassword } = req.body;
 
-            const user = await userService.getSingleUserProfile({
-                passwordResetToken:token
-            })
-            console.log(user);
-            
+        const user = await userService.getSingleUserProfile({
+            passwordResetToken: token,
+            passwordResetExpiry: { $gt: new Date() }
+        });
 
-            if (!user) {
-                throw({code: 400, message:"Invalid or expired token", status:"INVAID-TOKEN_ERR"})
-                
-            }
-            if (user.passwordResetExpiry < new Date()) {
-                throw({code:400, message:"Token Expired", status:"TOKEN_EXPIRED_ERR"})
-                
-            }
-            const newHashedPassword = bcrypt.hashSync(newpassword, 10)
-
-            await userService.updateSingleProfile({
-                _id: user._id
-            },{
-                password: newHashedPassword,
-                passwordResetToken:null,
-                passwordResetExpiry:null
-
-            })
-
-            res.json({
-                message:"Passowrd Reset Successully.",
-                status:"OK"
-            })  
-        } catch (exception) {
-            next(exception)
+        if (!user) {
+            throw {
+                code: 400,
+                message: "Invalid or expired token",
+                status: "INVALID-TOKEN_ERR"
+            };
         }
 
+        const newHashedPassword = bcrypt.hashSync(newpassword, 10);
+
+        await userService.updateSingleProfile(
+            { _id: user._id },
+            {
+                password: newHashedPassword,
+                passwordResetToken: null,
+                passwordResetExpiry: null
+            }
+        );
+
+        res.json({
+            message: "Password Reset Successfully.",
+            status: "OK"
+        });
+
+    } catch (exception) {
+        next(exception);
     }
+};
+
 
 
 
