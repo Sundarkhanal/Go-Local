@@ -24,7 +24,7 @@ class UserService{
                 data.image = req.file.filename
                 data.emailVerified = false;
                 data.otp = randomStringGenerater(6).toUpperCase()
-                data.expiryTime = new Date(Date.now()+ 6000)
+                data.expiryTime = new Date(Date.now()+ 60000)
             }
         return data
     }

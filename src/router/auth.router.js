@@ -12,6 +12,7 @@ authRouter.post("/resend-otp", validator(OTPVerifyDTO), authCtrl.resendActivatio
 authRouter.post('/login', validator(LoginDTO), authCtrl.login)
 authRouter.post('/me',checkPermission, authCtrl.getLoggedInUser)
 authRouter.post('/forget-password', authCtrl.forgetPassword)
+authRouter.post('/reset-password', authCtrl.resetPassword)
 
 
 

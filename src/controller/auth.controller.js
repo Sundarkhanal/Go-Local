@@ -195,10 +195,10 @@ class AuthController{
             await this.#validateUserExistsByEmail(email)
 
             const resetToken = randomStringGenerater(6).toUpperCase()
-            const expiryTime = new Date(Date.now()+6000)
+            const expiryTime = new Date(Date.now()+15*60*6000)
 
             await userService.updateSingleProfile({_id: this.#userDetail._id}, {
-                passwordResetToken : resetToken,
+                passwordResetToken: resetToken,
                 passwordResetExpiry: expiryTime
             })
 
@@ -207,8 +207,12 @@ class AuthController{
                 subject:"Reset Your Password",
                 message:userService.getResetPasswordMessage({
                     name:this.#userDetail.name,
-                    resetLink:`http://localhost:9005/ap1/v1/forget-password?token = ${passwordResetToken}`
+                    resetLink:`http://localhost:9005/ap1/v1/reset-password?token = ${resetToken}`
                 })
+            })
+            res.json({
+                message:"An Email has been sent to your account",
+                status:"OK"
             })
 
             
@@ -216,6 +220,48 @@ class AuthController{
             next(exception)
         }
     }
+
+    resetPassword = async(req, res, next) =>{
+        try {
+            const {token, newpassword} = req.body
+            
+
+            const user = await userService.getSingleUserProfile({
+                passwordResetToken:token
+            })
+            console.log(user);
+            
+
+            if (!user) {
+                throw({code: 400, message:"Invalid or expired token", status:"INVAID-TOKEN_ERR"})
+                
+            }
+            if (user.passwordResetExpiry < new Date()) {
+                throw({code:400, message:"Token Expired", status:"TOKEN_EXPIRED_ERR"})
+                
+            }
+            const newHashedPassword = bcrypt.hashSync(newpassword, 10)
+
+            await userService.updateSingleProfile({
+                _id: user._id
+            },{
+                password: newHashedPassword,
+                passwordResetToken:null,
+                passwordResetExpiry:null
+
+            })
+
+            res.json({
+                message:"Passowrd Reset Successully.",
+                status:"OK"
+            })  
+        } catch (exception) {
+            next(exception)
+        }
+
+    }
+
+
 
 }
 
