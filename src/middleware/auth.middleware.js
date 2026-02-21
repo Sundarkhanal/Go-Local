@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken")
 const { appConfing } = require("../config/config")
 const userService = require("../services/user.service")
-module.exports = async(req, res, next) => {
+const { UserRoles } = require("../utilities/constants")
+module.exports = (roles=null)=>{
+    return async(req, res, next) => {
     try {
         let token = req.cookies.Authorization ?? req.headers["authorization"]
         if (!token) {
@@ -12,7 +14,15 @@ module.exports = async(req, res, next) => {
         const data = jwt.verify( token, appConfing.jwtSecret)
         const userDetail = await userService.getSingleUserProfile({_id: data.sub});
         req.loggedInUser = userService.getPublicUserProfile(userDetail);
-        next()
+
+        if (!roles || userDetail.role === UserRoles.ADMIN) {
+            next()
+        } else if(roles && roles.includes(userDetail.role)){
+            next()
+        } else{
+            throw{code:403, message:"Access Denied", status:'ACCESS_DENIED'}
+        }
+        
         
     } catch (exception) {
         let errMsg = exception
@@ -30,4 +40,5 @@ module.exports = async(req, res, next) => {
         
     }
     
+}
 }

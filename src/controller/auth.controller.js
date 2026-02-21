@@ -259,7 +259,24 @@ class AuthController{
     } catch (exception) {
         next(exception);
     }
-};
+    };
+
+    logout = (req, res, next) =>{
+        try {
+            res.clearCookie("Authorization")
+
+            res.json({
+                message:"Logged out successfully",
+                status:"Ok"
+            })
+            
+        } catch (exception) {
+            next(exception)
+            
+        }
+    }
+
+
 
 
 
