@@ -14,6 +14,9 @@ const categoryDTO = Joi.object({
 })
 
 categoryRouter.post('/create-category',validator(categoryDTO), categoryCtrl.createCategory)
+categoryRouter.get('/get-data', categoryCtrl.listAllCategory)
+// categoryRouter.get('/:blogId')
+
 
 
 

@@ -19,6 +19,50 @@ class CategoryController{
 
     }
 
+    listAllCategory = async(req, res, next) => {
+        try {
+            const query = req.query
+
+            let filter = {}
+            let page = +query.page || 1
+            let limit = +query.limit || 20
+
+            if(query.search){
+                filter={
+                    $or: [
+                        {name: new RegExp(query.search, 'i')},
+                        {description: new RegExp(query.search, 'i')}
+                    ]
+                }
+            }
+
+            if(query.status){
+                filter = {
+                    ...filter,
+                    status:query.status
+                }
+            }
+
+            const {data, count} = await categoryService.listAll({filter, page, limit}) //req.query for getting limit and page
+            res.json({
+                data: data,
+                message:"All categories fetched successfully!",
+                status:"Ok",
+                pagination:{
+                    total:count,
+                    page:page,
+                    limit:limit
+                }
+            })
+        } catch (exception) {
+            next(exception)
+        }
+        
+    }
+    
+
+
+
 
 }
 

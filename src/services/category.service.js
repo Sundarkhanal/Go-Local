@@ -19,6 +19,53 @@ class CategoryService{
             
         }
     }
+
+    async listAll({filter = {},limit = 10, page = 1}){
+        try {
+            //fetch all data
+            const data = await CategoryModel.find(filter)
+            // .populate("name", "description", "slug", "status")
+            .limit(limit)
+            .skip(((page-1)* limit))
+            .sort({createdAt: "desc"}); //newest first
+
+            const totalcount = await CategoryModel.countDocuments(filter)
+
+            return {data, count:totalcount}
+        } catch (exception) {
+            throw exception
+        }
+    }
+
+    async getSingleRow(filter){
+        try {
+            const data = await CategoryModel.findOne(filter)
+            return data;    
+        } catch (exception) {
+            throw exception
+        }
+    }
+
+    async updateSingleRow(filter, data){
+        try {
+            const data = await CategoryModel.findOneAndUpdate(filter, {$set: data}, {new:true})
+            return data
+        } catch (exception) {
+            throw exception
+        }
+    }
+
+    async deleteSingleRow(filter){
+        try {
+            const data = await CategoryModel.findOneAndDelete(filter)
+            return data
+            
+        } catch (exception) {
+            throw exception
+        }
+    }
 }
+
+
 
 module.exports = new CategoryService()
