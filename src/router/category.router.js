@@ -13,10 +13,11 @@ const categoryDTO = Joi.object({
     status:Joi.string().regex(/^(active|inactive)$/).default(GeneralStatus.INACTIVE)
 })
 
-categoryRouter.post('/create-category',validator(categoryDTO), categoryCtrl.createCategory)
+categoryRouter.post('/create-category',checkpermission(),validator(categoryDTO), categoryCtrl.createCategory)  //todo check permission 
 categoryRouter.get('/get-data', categoryCtrl.listAllCategory)
 categoryRouter.get('/:blogId', categoryCtrl.getCategoryById)
 categoryRouter.get('/by-slug/:slug', categoryCtrl.getcategoryBySlug)
+categoryRouter.put('/:blogId',checkpermission(), validator(categoryDTO), categoryCtrl.updatecategoryById) // todo check permission
 
 
 

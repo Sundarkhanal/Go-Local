@@ -46,9 +46,19 @@ class CategoryService{
         }
     }
 
-    async updateSingleRow(filter, data){
+    async updateSingleRow(filter, updateData){
         try {
-            const data = await CategoryModel.findOneAndUpdate(filter, {$set: data}, {new:true})
+
+            if(updateData.name){
+                updateData.slug = slugify(updateData.name, {
+                    lower:true,
+                    strict:true,
+                    remove:/[*+~.()'"!:@]/g
+                })
+
+            }
+
+            const data = await CategoryModel.findOneAndUpdate(filter, {$set: updateData}, {new:true}) //find, update, returns updated data
             return data
         } catch (exception) {
             throw exception

@@ -118,6 +118,25 @@ class CategoryController{
 
     updatecategoryById = async (req, res, next) => {
         try {
+            const id = req.params.blogId
+            let filter = {
+                _id:id
+            }
+            const detail = await categoryService.getSingleRow(filter)
+            
+            if (!detail) {
+                throw {code: 404,  message:"Category Not Found", status:"NOT_FOUND_ERR"}
+            }
+            const data = req.body
+
+            const response = await categoryService.updateSingleRow(filter, data)  
+        
+            
+            res.json({
+                data:response,
+                message:"Category updated succesfully",
+                status:"OK"
+            })
             
         } catch (exception) {
             next(exception)
