@@ -59,7 +59,70 @@ class CategoryController{
         }
         
     }
-    
+
+    getCategoryById = async (req, res, next) => {
+        try {
+            const id = req.params.blogId
+            let filter = {
+                _id: id
+            }
+            if(req.query.status){
+                filter={
+                    ...filter,
+                    status:req.query.status
+                }
+            }
+            const data = await categoryService.getSingleRow(filter)
+            if (!data) {
+                throw{code:404, message:"Category Not Found", status:"CATEGORY_NOT_FOUND_ERR"}
+                
+            }
+            res.json({
+                data:data,
+                message:"Category Detail",
+                status:"OK"
+            })
+            
+        } catch (exception) {
+            next(exception)
+        }
+    }
+
+    getcategoryBySlug = async (req, res, next) => {
+        try {
+            const slug = req.params.slug
+            let filter = {
+                slug: slug
+            }
+            if(req.query.status){
+                filter={
+                    ...filter,
+                    status:req.query.status
+                }
+            }
+            const data = await categoryService.getSingleRow(filter)
+            if (!data) {
+                throw{code:404, message:"Category Not Found", status:"CATEGORY_NOT_FOUND_ERR"}
+                
+            }
+            res.json({
+                data:data,
+                message:"Category Detail",
+                status:"OK"
+            })
+            
+        } catch (exception) {
+            next(exception)
+        }
+    }
+
+    updatecategoryById = async (req, res, next) => {
+        try {
+            
+        } catch (exception) {
+            next(exception)
+        }
+    }
 
 
 
