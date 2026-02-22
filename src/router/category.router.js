@@ -18,6 +18,7 @@ categoryRouter.get('/get-data', categoryCtrl.listAllCategory)
 categoryRouter.get('/:blogId', categoryCtrl.getCategoryById)
 categoryRouter.get('/by-slug/:slug', categoryCtrl.getcategoryBySlug)
 categoryRouter.put('/:blogId',checkpermission(), validator(categoryDTO), categoryCtrl.updatecategoryById) // todo check permission
+categoryRouter.delete('/:blogId', categoryCtrl.deleteCategoryById)
 
 
 

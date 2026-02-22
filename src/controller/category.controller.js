@@ -143,6 +143,30 @@ class CategoryController{
         }
     }
 
+    deleteCategoryById = async(req, res, next) => {
+        try {
+            const id = req.params.blogId;
+            let filter = {
+                _id: id
+            }
+            const detail = await categoryService.getSingleRow(filter)
+            if (!detail) {
+                throw {code:404, message:"Category Not Found", status:"NOT_FOUND_ERR"}
+            }
+
+            const del = await categoryService.deleteSingleRow(detail)
+            res.json({
+                data:null,
+                message:"Category Deleted Succesfully",
+                status:"Ok"
+            })
+            
+        } catch (exception) {
+            next(exception)
+            
+        }
+    }
+
 
 
 
