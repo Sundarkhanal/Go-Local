@@ -5,6 +5,17 @@ class CategoryService{
     async store(data){
         try {
             const {name, description, parent} = data
+
+            if(parent){
+                const parentCategory = await CategoryModel.findById(parent)
+                if(!parentCategory){
+                    throw{
+                        code:400,
+                        message:"Parent Category not found",
+                        status:"NOT_FOUND_ERR"
+                    }
+                }
+            }
             
             data.slug = slugify(data.name, {
                 lower:true,
@@ -24,7 +35,7 @@ class CategoryService{
         try {
             //fetch all data
             const data = await CategoryModel.find(filter)
-            // .populate("name", "description", "slug", "status")
+            .populate("parent", "name", "slug")
             .limit(limit)
             .skip(((page-1)* limit))
             .sort({createdAt: "desc"}); //newest first

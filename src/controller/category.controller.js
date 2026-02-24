@@ -24,13 +24,13 @@ class CategoryController{
             const query = req.query
 
             let filter = {}
-            let page = +query.page || 1
+            let page = +query.page || 1   // +is for numeric conversion => data comes in string and it converts to number
             let limit = +query.limit || 20
 
             if(query.search){
                 filter={
                     $or: [
-                        {name: new RegExp(query.search, 'i')},
+                        {name: new RegExp(query.search, 'i')},   // i for case insensitive
                         {description: new RegExp(query.search, 'i')}
                     ]
                 }
@@ -38,10 +38,17 @@ class CategoryController{
 
             if(query.status){
                 filter = {
-                    ...filter,
+                    ...filter, //using spread operator to merge existing filter with new status filter
                     status:query.status
                 }
             }
+
+            if (query.parent) {
+                filter = {
+                    ...filter,
+                    parent:query.parent
+                
+            }}
 
             const {data, count} = await categoryService.listAll({filter, page, limit}) //req.query for getting limit and page
             res.json({
@@ -166,10 +173,12 @@ class CategoryController{
             
         }
     }
-
-
-
-
 }
 
+
+
+
+
 module.exports = new CategoryController()
+
+
