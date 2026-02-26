@@ -1,11 +1,11 @@
-const { default: slugify } = require("slugify")
+const  slugify  = require("slugify")
 
 const ProductModel = require("../models/product.model")
 const CategoryModel = require("../models/category.model")
-const { date } = require("joi")
+
 
 class ProductService{
-    async store(){
+    async store(data){
         try {
             const{name,description, category, price, stockQuantity, images} = data
             const new_category = await CategoryModel.findById(data.category)
@@ -38,7 +38,7 @@ class ProductService{
     async listAll({filter={}, limit = 10, page = 1}){
         try {
             const data = await ProductModel.find(filter)
-            .populate("category", "name", "slug")
+            .populate("category", "name slug")
             .limit(limit)
             .skip((page-1)*limit)
             .sort({createdAt:"desc"})
@@ -94,3 +94,5 @@ class ProductService{
 
     }
 }
+
+module.exports = new ProductService()

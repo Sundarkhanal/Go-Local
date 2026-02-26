@@ -163,7 +163,7 @@ class AuthController{
             }
             
             const token = jwt.sign({sub: this.#userDetail._id}, appConfing.jwtSecret, {expiresIn:"1d"})
-            res.cookie("Authorization", "Bearer"+token, {maxAge: 600000, httpOnly: true})
+            res.cookie("Authorization", "Bearer"+token, {maxAge: 6000000, httpOnly: true})
 
             res.json({
                 data: token,
