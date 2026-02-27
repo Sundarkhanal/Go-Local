@@ -12,10 +12,18 @@ const Gender = {
     FEMALE: "female",
     OTHER: "other"
 }
+const OrderStatus ={
+    PENDING:"pending",
+    PROCESSING:"processing",
+    COMPLETED:'completed',
+    CANGELLED:"cancelled"
+
+}
 
 module.exports = {
     UserRoles,
     GeneralStatus,
-    Gender
+    Gender,
+    OrderStatus
 }
 
