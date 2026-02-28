@@ -73,6 +73,39 @@ class OrderService{
         }
     }
 
+    async getUserOrder(filter = {}){
+        try {
+            const order = await OrderModel.find(filter)
+            .populate("products.productId")
+            .populate("user")
+            .sort({createdAt: "desc"})
+            return order
+            
+        } catch (exception) {
+            throw exception
+            
+        }
+
+    }
+    async getAllOrder(filter = {}){
+        try {
+            if(filter.status) filter.status = filter.status
+            if(filter.userId) filter.user = filter.userId
+            const order = await OrderModel.find(filter)
+            .populate("products.productId")
+            .populate("user")
+            .sort({createdAt: "desc"})
+            return order
+            
+        } catch (exception) {
+            throw exception
+            
+        }
+
+    }
+
+
+
 
 }
 
