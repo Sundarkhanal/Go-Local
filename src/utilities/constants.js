@@ -16,7 +16,7 @@ const OrderStatus ={
     PENDING:"pending",
     PROCESSING:"processing",
     COMPLETED:'completed',
-    CANGELLED:"cancelled"
+    CANCELLED:"cancelled"
 
 }
 

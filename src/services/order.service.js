@@ -1,5 +1,7 @@
+const { object } = require("joi")
 const OrderModel = require("../models/order.model")
 const ProductModel = require("../models/product.model")
+const { OrderStatus } = require("../utilities/constants")
 
 class OrderService{
     async createOrder(userId, products){
@@ -102,6 +104,66 @@ class OrderService{
             
         }
 
+    }
+    async updateOrder(orderId, newStatus){
+        try {
+            if (!Object.values(OrderStatus).includes(newStatus)) {
+                throw{
+                    code:404,
+                    message:"Invalid Status",
+                    status:"INVALID_STATUS"
+                }
+            }
+
+            const order = await OrderModel.findById(orderId)
+            if (!order) {
+                throw{
+                    code:404,
+                    message:"order not found",
+                    status:"ORDER_NOT_FOUND"
+                }
+            }
+            if (order.status === OrderStatus.COMPLETED) {
+                throw{
+                    code:400,
+                    message:"Delivered order cannot be modified",
+                    status:"ORDER_ALREADY_DELIVERED"
+                }
+            }
+            if (order.status === OrderStatus.CANCELLED) {
+                throw{
+                    code:400,
+                    message:"Cancelled order cannot be modified",
+                    status:"ORDER_ALREADY_CANCELLED"
+                }
+            }
+            if (newStatus === OrderStatus.CANGELLED) {
+                for(let items of order.products){
+                    const product = await ProductModel.findById(items.productId)
+                    if (product) {
+                        product.stockQuantity += items.stockQuantity
+                        await product.save()
+                    }
+                }
+            }
+            order.status = newStatus
+            await order.save()
+
+            const updatedOrder = await OrderModel.findById(order._id)
+            .populate("user")
+            .populate("products.productId")
+
+            return updatedOrder
+
+            
+
+            
+        } catch (exception) {
+            throw exception
+        }
+    }
+    async deleteOrder(){
+        
     }
 
 

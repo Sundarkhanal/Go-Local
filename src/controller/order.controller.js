@@ -62,13 +62,22 @@ class OrderController{
     }
     updateOrder = async(req, res, next) =>{
         try {
-            
+            const userId = req.loggedInUser._id
+            const orderId = req.params.orderId
+            const newStatus = req.body.status
+
+            const updateResponse = await orderService.updateOrder(orderId, newStatus)
+            res.json({
+                data:updateResponse,
+                message:"Order updated Succesfully!!",
+                status:"Ok"
+            })
         } catch (exception) {
-            
+            next(exception)
         }
 
     }
-    deleteeOrder = async(req, res, next) =>{
+    deleteOrder = async(req, res, next) =>{
         try {
             
         } catch (exception) {
