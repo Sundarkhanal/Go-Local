@@ -56,7 +56,7 @@ class CartService {
         }
     }
 
-    // Get user's cart
+
     async getCart(userId) {
         try {
             const cart = await CartModel.findOne({ user: userId })
@@ -67,7 +67,6 @@ class CartService {
         }
     }
 
-    // Remove a product from cart
     async removeCartItem(userId, productId) {
         try {
             const cart = await CartModel.findOne({ user: userId });
