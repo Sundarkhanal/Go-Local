@@ -2,7 +2,8 @@ const { date } = require("joi")
 const cartService = require("./cart.service")
 const Payment = require("../models/esewa.payment.model")
 const { generateEsewaSignature } = require("../utilities/helper")
-const Order = require("../models/order.model")
+const OrderModel = require("../models/order.model")
+
 
 class EPaymentService{
     async initiatePayment(userId){
@@ -76,7 +77,7 @@ class EPaymentService{
           payment.esewaResponse = paymentData
           await payment.save()
 
-          const order = await Order.findById(payment.order)
+          const order = await OrderModel.findById(payment.order)
           if(order){
             order.status = "completed"
             await order.save()
@@ -86,6 +87,55 @@ class EPaymentService{
             transactionId: paymentData.transaction_uuid
 
           }
+            
+        } catch (exception) {
+            throw exception
+        }
+    }
+
+    async failedPayment(encodedData){
+        try {
+            if(!encodedData){
+                throw{
+                    code:400,
+                    message:"No Payment Data Received",
+                    status:"NOT_FOUND_ERR"
+                }
+            }
+
+            const decodedString = Buffer.from(encodedData, "base64").toString("utf-8")
+            const paymentData = JSON.parse(decodedString)
+
+            const payment = await Payment.findOne({
+                transactionId:paymentData.transaction_uuid
+            })
+            if(!payment){
+                throw{
+                    code:404,
+                    message:"No Payment Found",
+                    status:"NOT_FOUND_ERR"
+                }
+            }
+            if (paymentData.status === "COMPLETE") {
+            throw {
+                code: 400,
+                message: "This is not a failed payment",
+            };
+            }
+            payment.status = "failed";
+            payment.esewaResponse = paymentData
+            await payment.save()
+
+            const order = await OrderModel.findById(payment.order)
+            if (order) {
+                order.status = "cancelled"
+                await order.save()
+            }
+            return{
+                transactionId: paymentData.transaction_uuid
+            }
+
+
             
         } catch (exception) {
             throw exception

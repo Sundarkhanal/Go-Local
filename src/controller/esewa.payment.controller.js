@@ -33,6 +33,22 @@ class PaymentController{
             next(exception)
         }
     }
+
+    paymentFailed = async(req, res, next)=> {
+        try {
+            const data = req.query.data;
+            const failedResult = await EPaymentService.failedPayment(data)
+
+            res.json({
+                data:failedResult,
+                message:"Payment Failed",
+                status:"Failed"
+            })
+            
+        } catch (exception) {
+            next(exception)
+        }
+    }
 }
 
 module.exports =  new PaymentController()
