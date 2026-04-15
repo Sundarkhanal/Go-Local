@@ -1,4 +1,4 @@
-const UserModel = require("../models/user.model");
+const UserModel = require("../../server/models/user.model");
 const bcrypt = require("bcryptjs");
 const { randomStringGenerater } = require("../utilities/helper");
 class UserService{

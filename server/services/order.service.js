@@ -1,7 +1,7 @@
 const { object } = require("joi")
 const OrderModel = require("../models/order.model")
 const ProductModel = require("../models/product.model")
-const { OrderStatus } = require("../utilities/constants")
+const { OrderStatus } = require("../../src/utilities/constants")
 
 class OrderService{
     async createOrder(userId, products){

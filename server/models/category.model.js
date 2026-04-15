@@ -17,6 +17,7 @@ const CategorySchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    //self reference category
     parent:{
         type:mongoose.Types.ObjectId,
         ref:'Category',
