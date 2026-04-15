@@ -1,12 +1,12 @@
 const cartService = require("../services/cart.service")
-const esewaPaymentService = require("../services/esewa.payment.service")
+const EPaymentService = require("../services/esewa.payment.service")
 
 class PaymentController{
     initiatePayment = async(req, res, next) => {
         try {
             const userId = req.loggedInUser._id
 
-            const paidUser = await esewaPaymentService(userId)
+            const paidUser = await EPaymentService.initiatePayment(userId)
 
             res.json({
                 data:paidUser,
@@ -14,6 +14,21 @@ class PaymentController{
                 status:"Ok"
             })
             
+        } catch (exception) {
+            next(exception)
+        }
+    }
+    paymentSuccess = async(req, res, next) =>{
+        try {
+            const data = req.query.data
+            const result = await EPaymentService.successPayment(data)
+
+            res.json({
+                data: result,
+                message:"Payment Successfull",
+                status:"Ok"
+            })
+
         } catch (exception) {
             next(exception)
         }

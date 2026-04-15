@@ -19,11 +19,17 @@ const OrderStatus ={
     CANCELLED:"cancelled"
 
 }
+const PaymentStatus = {
+    PENDING:"pending",
+    SUCCESS:"success",
+    FAILED:"failed"
+}
 
 module.exports = {
     UserRoles,
     GeneralStatus,
     Gender,
-    OrderStatus
+    OrderStatus,
+    PaymentStatus
 }
 
