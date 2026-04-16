@@ -38,7 +38,7 @@ const Navbar = () => {
                     Cart
                 </button>
 
-                <button className="px-4 py-1 border border-gray-300 rounded hover:bg-gray-100">
+                <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-gray-100">
                     Login
                 </button>
 
