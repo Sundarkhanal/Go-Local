@@ -1,10 +1,11 @@
 interface IProductProps{
     name:string,
     price:number,
-    image: string
+    image: string,
+    onAdd: () => void
 }
 
-const ProducCart = ({name, price, image}:IProductProps) => {
+const ProducCart = ({name, price, image, onAdd}:IProductProps) => {
     return(
         <div className="bg-white rounded-xl shadow hover:shadow-xl hover:-translate-y-1 transition p-4">
             <img src={image} className="rounded-lg h-40 w-full object-cover"/>
@@ -16,7 +17,9 @@ const ProducCart = ({name, price, image}:IProductProps) => {
                     Nrs.{price}
                 </span>
 
-                <button className="px-3 py-1 bg-teal-600 text-white rounded hover:shadow"> 
+                <button className="px-3 py-1 bg-teal-600 text-white rounded hover:shadow cursor-pointer"
+                onClick={onAdd}
+                > 
                     Add
                 </button>
 

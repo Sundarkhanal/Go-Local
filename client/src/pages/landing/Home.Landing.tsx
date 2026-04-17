@@ -3,9 +3,44 @@ import product1 from "../../assets/images/products/product1.jpeg"
 import product2 from "../../assets/images/products/product2.jpeg"
 import product3 from "../../assets/images/products/product3.jpeg"
 import product4 from "../../assets/images/products/product4.jpeg"
+import { useState } from "react";
 
 const Home = () => {
+    const [cart, setCart] = useState<any[]>([])
+    const addToCart = (product:any) => {
+        setCart([...cart, product])
+    }
+
+    const products = [
+        {
+            id: 1,
+            name: "Rice",
+            price: 400,
+            image:product1
+        },
+        {
+            id: 2,
+            name: "Apple",
+            price: 500,
+            image:product2
+        },
+        {
+            id: 3,
+            name: "Millet",
+            price: 600,
+            image:product3
+        },
+        {
+            id: 4,
+            name: "Millet1",
+            price: 600,
+            image:product4
+        }
+    ];
+
   return (
+
+
     <div className="bg-[#faf7f2] min-h-screen">
       
       <div className="max-w-7xl mx-auto px-6 py-16 flex items-center justify-between">
@@ -110,16 +145,25 @@ const Home = () => {
 
         </section>
 
+
         <section className="gap-12 py-16 px-6 max-w-7xl mx-auto">
             
             <h2 className="text-2xl font-bold text-gray-800 mb-8">
                 Featured Products
             </h2>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                <ProducCart name="Product1" price={400} image={product1}/>
-                <ProducCart name="Product2" price={500} image={product2}/>
-                <ProducCart name="Product3" price={600} image={product3}/>
-                <ProducCart name="Product4" price={700} image={product4}/>
+               {products.map((item) => (
+                <ProducCart 
+                key={item.id}
+                name={item.name}
+                price={item.price}
+                image={item.image}
+                onAdd={() => addToCart(item)}
+                />
+               ))} 
+                
+
 
 
             </div>
@@ -127,6 +171,8 @@ const Home = () => {
             
 
         </section>
+
+        
 
     </div>
 
