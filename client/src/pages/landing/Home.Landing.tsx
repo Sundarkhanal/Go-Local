@@ -3,10 +3,13 @@ import product1 from "../../assets/images/products/product1.jpeg"
 import product2 from "../../assets/images/products/product2.jpeg"
 import product3 from "../../assets/images/products/product3.jpeg"
 import product4 from "../../assets/images/products/product4.jpeg"
-import { useState } from "react";
 
-const Home = () => {
-    const [cart, setCart] = useState<any[]>([])
+interface IHomeProps {
+  cart: any[];
+  setCart: React.Dispatch<React.SetStateAction<any[]>>;
+}
+
+const Home = ({cart, setCart}: IHomeProps) => {
     const addToCart = (product:any) => {
         setCart([...cart, product])
     }

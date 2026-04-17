@@ -1,10 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
+interface IMainLayoutProps{
+    cart: any[]
+}
 
-const MainLayout = () => {
+const MainLayout = ({cart}:IMainLayoutProps) => {
   return (
     <>
-      <Navbar />
+      <Navbar  cart = {cart}/>
       <Outlet />
     </>
   );

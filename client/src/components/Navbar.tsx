@@ -1,7 +1,9 @@
 import { useState } from "react";
+interface INavbarProps{
+  cart:any[]
+}
 
-
-const Navbar = () => {
+const Navbar = ({cart}:INavbarProps) => {
     const [menuOpen, setMenuOpen] = useState(false)
   return (
     <header className="bg-white shadow-sm relative">
@@ -34,8 +36,15 @@ const Navbar = () => {
                 <li><a className="text-black-500 hover:text-gray-700 hover:text-teal-900 hover:shadow-md transition durition-200" href="#">Categories</a></li>
                 <div className="flex items-center gap-4">
   
-                <button className="text-black-700 hover:shadow-md transition durition-200">
+                <button className="text-black-700 hover:shadow-md transition duration-200">
                     Cart
+                    {cart.length > 0 &&
+                      <span className="ml-1 bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full">
+                        {cart.length}
+                      </span>
+
+                    }
+                      
                 </button>
 
                 <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-gray-100">
