@@ -1,3 +1,9 @@
+import ProducCart from "../../components/ProductCart";
+import product1 from "../../assets/images/products/product1.jpeg"
+import product2 from "../../assets/images/products/product2.jpeg"
+import product3 from "../../assets/images/products/product3.jpeg"
+import product4 from "../../assets/images/products/product4.jpeg"
+
 const Home = () => {
   return (
     <div className="bg-[#faf7f2] min-h-screen">
@@ -72,8 +78,58 @@ const Home = () => {
         </div>
 
       </div>
+      <section className="py-16 px-6 max-w-7xl mx-auto">
+  
+        <h2 className="text-2xl font-bold text-black-800 mb-8">
+            Shop by Categories
+        </h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+            <div className="bg-white p-6 rounded-xl hover:shadow-lg hover:scale-105 transition text-center cursor-pointer">
+            🌾
+            <p className="mt-2 font-medium">Grains</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow hover:scale-105 hover:shadow-lg transition text-center cursor-pointer">
+            🍎
+            <p className="mt-2 font-medium">Fruits</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow hover:scale-105 hover:shadow-lg transition text-center cursor-pointer">
+            🥬
+            <p className="mt-2 font-medium">Vegetables</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition text-center cursor-pointer">
+            🍯
+            <p className="mt-2 font-medium">Organic</p>
+            </div>
+
+        </div>
+
+        </section>
+
+        <section className="gap-12 py-16 px-6 max-w-7xl mx-auto">
+            
+            <h2 className="text-2xl font-bold text-gray-800 mb-8">
+                Featured Products
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <ProducCart name="Product1" price={400} image={product1}/>
+                <ProducCart name="Product2" price={500} image={product2}/>
+                <ProducCart name="Product3" price={600} image={product3}/>
+                <ProducCart name="Product4" price={700} image={product4}/>
+
+
+            </div>
+            
+            
+
+        </section>
 
     </div>
+
   );
 };
 
