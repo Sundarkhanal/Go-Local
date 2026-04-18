@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 interface INavbarProps{
   cart:any[]
@@ -6,7 +7,7 @@ interface INavbarProps{
 const Navbar = ({cart}:INavbarProps) => {
     const [menuOpen, setMenuOpen] = useState(false)
   return (
-    <header className="bg-white shadow-sm relative">
+    <header className="bg-white shadow-sm relative sticky top-0 z-50 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           
@@ -36,7 +37,8 @@ const Navbar = ({cart}:INavbarProps) => {
                 <li><a className="text-black-500 hover:text-gray-700 hover:text-teal-900 hover:shadow-md transition durition-200" href="#">Categories</a></li>
                 <div className="flex items-center gap-4">
   
-                <button className="text-black-700 hover:shadow-md transition duration-200">
+                <Link to="/cart">
+                <button className="text-black-700 hover:shadow-md transition duration-200 cursor-pointer">
                     Cart
                     {cart.length > 0 &&
                       <span className="ml-1 bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full">
@@ -46,6 +48,7 @@ const Navbar = ({cart}:INavbarProps) => {
                     }
                       
                 </button>
+                </Link>
 
                 <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-gray-100">
                     Login
