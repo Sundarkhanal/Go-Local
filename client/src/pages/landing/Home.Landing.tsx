@@ -11,8 +11,20 @@ interface IHomeProps {
 
 const Home = ({cart, setCart}: IHomeProps) => {
     const addToCart = (product:any) => {
-        setCart([...cart, product])
+        const existing = cart.find((item:any) => item.id === product.id)
+
+        if (existing) {
+            setCart(
+                cart.map((item:any) => item.id === product.id
+                ?{...item, quantity:item.quantity+1}
+                : item
+            )
+            )
+        } else{
+            setCart([...cart, {...product, quantity:1}])
+        }
     }
+    
 
     const products = [
         {
