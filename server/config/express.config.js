@@ -3,8 +3,22 @@ const router = require("../router/router")
 const cookieParser = require("cookie-parser")
 const errorHandler = require("../middleware/error-handler.middleware")
 const mangoInitialize = require("./mango.config")
+const cors = require("cors")
+const helmet = require("helmet")
+const {rateLimit} = require("express-rate-limit")
 
 const app = express()
+app.use(cors())
+
+/// xxs policy
+app.use(helmet())
+
+// limit policy
+const limiter = rateLimit({
+    windowMs:1*60*1000,   //should be in ms
+    limit: 15,
+})
+app.use(limiter)
 
 app.use(cookieParser())
 

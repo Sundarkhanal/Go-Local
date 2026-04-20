@@ -1,5 +1,5 @@
 const http = require("http");
-const app = require("./src/config/express.config")
+const app = require("./config/express.config")
 
 const server = http.createServer(app);
 
