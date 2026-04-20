@@ -1,83 +1,125 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import axiosInstance from "../../lib/http/axios.config";
 
 
 
 const Register = () => {
 
     const navigate = useNavigate()
-  const [form, setForm] = useState({
+    const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
-  });
+    confirmPassword: "",
+    role: "customer",
+    address: "",
+    gender: "",
+    image: "",
+    });
   const handleRegister = async () => {
   try {
-    const res = await fetch("http://localhost:9005/api/v1/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-
-    console.log(data);
-
-    if (res.ok) {
-      alert("User registered successfully");
-    } else {
-      alert(data.message || "Registration failed");
+    console.log("FORM SENT:", form);
+    const payload = {
+        ...form,
+        image: form.image || null
     }
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong");
+    const response = await axiosInstance.post("auth/register", payload)
+    console.log(response.data);
+    alert("User Registered Successfully")
+
+  } catch (error:any) {
+    console.error(error.response?.data);
+    alert(error.response?.data?.message);
   }
 };
 
   return (
-    <div className="flex items-center justify-center min-h-[80vh] bg-gray-50">
-      
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        
-        <h2 className="text-2xl font-bold text-center mb-6 text-teal-600">
-          Register
-        </h2>
+   <div className="flex items-center justify-center min-h-[90vh] bg-gray-50">
+  <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
 
-        {/* Name */}
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="w-full mb-4 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
-        />
+    <h2 className="text-2xl font-bold text-center mb-6 text-teal-600">
+      Create Account
+    </h2>
 
-        {/* Email */}
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full mb-4 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
+    {/* Name */}
+    <input
+      type="text"
+      placeholder="Full Name"
+      className="w-full mb-3 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, name: e.target.value })}
+    />
 
-        {/* Password */}
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full mb-4 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
+    {/* Email */}
+    <input
+      type="email"
+      placeholder="Email"
+      className="w-full mb-3 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, email: e.target.value })}
+    />
 
-        {/* Button */}
-        <button className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700 transition cursor-pointer"
-        onClick={handleRegister}
-        >
-          Register
-        </button>
+    {/* Phone */}
+    <input
+      type="text"
+      placeholder="Phone (optional)"
+      className="w-full mb-3 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, phone: e.target.value })}
+    />
 
-      </div>
+    {/* Password */}
+    <input
+      type="password"
+      placeholder="Password"
+      className="w-full mb-3 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, password: e.target.value })}
+    />
 
-    </div>
+    {/* Confirm Password */}
+    <input
+      type="password"
+      placeholder="Confirm Password"
+      className="w-full mb-3 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+    />
+
+    {/* Gender */}
+    <select
+      className="w-full mb-3 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, gender: e.target.value })}
+    >
+      <option value="">Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="others">Others</option>
+    </select>
+
+    {/* Address */}
+    <textarea
+      placeholder="Address"
+      className="w-full mb-3 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, address: e.target.value })}
+    />
+
+    {/* Image URL */}
+    <input
+      type="text"
+      placeholder="Image (optional)"
+      className="w-full mb-4 px-4 py-2 border rounded"
+      onChange={(e) => setForm({ ...form, image: e.target.value })}
+    />
+
+    {/* Button */}
+    <button
+      onClick={handleRegister}
+      className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700 transition"
+    >
+      Register
+    </button>
+
+  </div>
+</div>
+
   );
 };
 
