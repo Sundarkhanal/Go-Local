@@ -20,7 +20,6 @@ const Register = () => {
     });
   const handleRegister = async () => {
   try {
-    console.log("FORM SENT:", form);
     const payload = {
         ...form,
         image: form.image || null
@@ -116,6 +115,13 @@ const Register = () => {
     >
       Register
     </button>
+
+    <h3 className="text-center text-sm text-gray-500 mt-4">
+      Already have an account? {" "}
+      <span onClick={() => navigate("/login")}
+      className="text-teal-600 cursor-pointer hover:underline cursor-pointer"
+        >Login</span>
+    </h3>
 
   </div>
 </div>
