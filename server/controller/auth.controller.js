@@ -153,7 +153,7 @@ class AuthController{
             const {email, password} = req.body;
             await this.#validateUserExistsByEmail(email)
 
-            if (!this.#userDetail.status === 'inactive') {
+            if (this.#userDetail.status === 'inactive') {
                 throw{code:422, message:"User not Activated yet...", status:"USER_NOT_ACTIVATED_ERR"}
                 
             }
@@ -163,7 +163,7 @@ class AuthController{
             }
             
             const token = jwt.sign({sub: this.#userDetail._id}, appConfing.jwtSecret, {expiresIn:"1d"})
-            res.cookie("Authorization", "Bearer"+token, {maxAge: 6000000, httpOnly: true})
+            res.cookie("token",token, {maxAge: 86400000, httpOnly: true, secure:false, sameSite:"lax"})
 
             res.json({
                 data: token,

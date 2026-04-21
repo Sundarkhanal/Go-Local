@@ -2,10 +2,13 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import axiosInstance from "../../lib/http/axios.config"
 import Cookies from "js-cookie"
+import { useAuth } from "../../context/AuthContext"
+
 
 
 const Login = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const {login} = useAuth()
     const [form, setForm] = useState({
         email:"",
         password:""
@@ -14,20 +17,18 @@ const Login = () => {
     const handleLogin = async() => {
         try {
             const res = await axiosInstance.post("auth/login", form)
-            console.log(res.data);
             alert("Logged In Successfully!")
             
-
+            
             const userProfile = await axiosInstance.get("auth/me", {
-                headers:{
-                    "Authorization": "Bearer "+res.data.data
-                }
+              withCredentials:true,
                 
-            });
-            Cookies.set("accessToken", res.data.data, {expires: 1, path:"/", secure:true, sameSite:"Strict"})
-            console.log(Cookies.get("accessToken"));
+              });
+              login(userProfile.data.data)
+            // Cookies.set("accessToken", res.data.data, {expires: 1, path:"/", secure:true, sameSite:"Strict"})
+            // console.log(Cookies.get("accessToken"));
 
-            console.log("UserProfile",userProfile);
+            // console.log("UserProfile",userProfile);
             
             navigate("/")
             
@@ -38,12 +39,12 @@ const Login = () => {
     }
     return(
          <div className="flex items-center justify-center min-h-[90vh] bg-gray-50">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+        <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
 
-        {/* Title */}
-        <h2 className="text-2xl font-bold text-center mb-6 text-teal-600">
-          Login to your account
-        </h2>
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-center mb-6 text-teal-600">
+            Login to your account
+            </h2>
 
         {/* Email Input */}
         <input

@@ -16,17 +16,16 @@ class UserService{
          const data = req.body;
             data.password = bcrypt.hashSync(data.password)
 
-            if (!req.file) {
-                throw({code:400, details:{image:"image is required"}, mesasge:"Validation Failed", status:"VALIDATION_FAILED_ERR"})
+            // if (!req.file) {
+            //     throw({code:400, details:{image:"image is required"}, mesasge:"Validation Failed", status:"VALIDATION_FAILED_ERR"})
                 
-            }else{
+            // }else{
 
-                data.image = req.file.filename
+                // data.image = req.file.filename
                 data.emailVerified = false;
                 data.otp = randomStringGenerater(6).toUpperCase()
                 data.expiryTime = new Date(Date.now()+ 600000)
-            }
-        return data
+                return data
     }
 
     getPublicUserProfile(userobj){

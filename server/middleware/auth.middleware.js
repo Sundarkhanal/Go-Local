@@ -5,12 +5,13 @@ const { UserRoles } = require("../utilities/constants")
 module.exports = (roles=null)=>{
     return async(req, res, next) => {
     try {
-        let token = req.cookies.Authorization ?? req.headers["authorization"]
+        // let token = req.cookies.Authorization ?? req.headers["authorization"]
+        let token = req.cookies.token
         if (!token) {
             throw{code: 401, message:"Not authorized", status:"USER_NOT_AUTHORIZED"}
             
         }
-        token = token.replace("Bearer", "")
+        // token = token.replace("Bearer", "")
         const data = jwt.verify( token, appConfing.jwtSecret)
         const userDetail = await userService.getSingleUserProfile({_id: data.sub});
         req.loggedInUser = userService.getPublicUserProfile(userDetail);

@@ -8,10 +8,17 @@ const helmet = require("helmet")
 const {rateLimit} = require("express-rate-limit")
 
 const app = express()
-app.use(cors())
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials: true
+}))
 
 /// xxs policy
-app.use(helmet())
+app.use(helmet({
+    crossOriginResourcePolicy: {
+        policy:"cross-origin"
+    }
+}))
 
 // limit policy
 const limiter = rateLimit({

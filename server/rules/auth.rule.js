@@ -23,7 +23,7 @@ const RegisterDTO = Joi.object({
     gender:Joi.string().regex(GenderPattern).required().messages({
         "string.pattern.base": "Gender should be either male, female or others"
     }),
-    image:Joi.string().allow(null, '').default(null)
+    image: Joi.string().allow("", null).default("")
 })
 
 const OTPVerifyDTO = Joi.object({

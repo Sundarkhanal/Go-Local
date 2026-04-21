@@ -6,7 +6,8 @@ const axiosInstance = axios.create({
     timeoutErrorMessage: "Server time out...",
     headers :{
         "Content-Type" : "application/json"
-    }
+    },
+    withCredentials:true
 
 })
 

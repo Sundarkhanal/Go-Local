@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 interface INavbarProps{
   cart:any[]
 }
 
 const Navbar = ({cart}:INavbarProps) => {
     const [menuOpen, setMenuOpen] = useState(false)
+    const {user, logout} = useAuth()
   return (
     <header className="bg-white shadow-sm relative sticky top-0 z-50 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -50,17 +52,31 @@ const Navbar = ({cart}:INavbarProps) => {
                 </button>
                 </Link>
 
-                <Link to='/login'>
-                <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-teal-600 hover:text-white ">
-                    Login
+                {user ? (
+                  <>
+                  <span className="text-teal-600 font-medium">
+                    Hello, {user.name}
+                  </span>
+                  <button onClick={logout}
+                  className="px-4 py-1 border border-red-400 text-red-500 rounded hover:bg-red-600 hover:text-white"
+                  >
+                    Logout
+                  </button>
+                  </>
+                ):(
+                <>
+              <Link to='/login'>
+                <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-teal-600 hover:text-white">
+                  Login
                 </button>
-                </Link>
+              </Link>
 
-                <Link to="/register">
+              <Link to="/register">
                 <button className="px-4 py-1 bg-teal-600 text-white rounded hover:bg-teal-900">
-                    Register
+                  Register
                 </button>
-                </Link>
+              </Link>
+                </>)}
                 
 
         </div>
