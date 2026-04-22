@@ -5,7 +5,7 @@ import { useAuth } from "../../context/AuthContext"
 
 
 
-const Login = () => {
+const Login = ({setCart}:any) => {
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
@@ -14,11 +14,12 @@ const Login = () => {
         email:"",
         password:""
     })
+    
+
 
     const handleLogin = async() => {
         try {
             const res = await axiosInstance.post("auth/login", form)
-            alert("Logged In Successfully!")
             
             
             const userProfile = await axiosInstance.get("auth/me", {
@@ -30,8 +31,14 @@ const Login = () => {
             // console.log(Cookies.get("accessToken"));
 
             // console.log("UserProfile",userProfile);
-            
-            navigate(from)
+            const savedCart = localStorage.getItem("guest_cart")
+            if(savedCart){
+              const parsedCart = JSON.parse(savedCart)
+              setCart(parsedCart)
+              localStorage.removeItem("guest_cart")
+            }
+            alert("Logged In Successfully!")
+            navigate(from, {replace:true})
             
             
         } catch (error:any) {

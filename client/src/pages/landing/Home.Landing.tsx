@@ -31,11 +31,14 @@ const Home = ({cart, setCart}: IHomeProps) => {
     }
     const handleAddToCart = (product:any) => {
         if(!user){
+            const updatedCart = [...cart, {...product, quantity:1}]
+            localStorage.setItem("guest_cart",JSON.stringify(updatedCart) )
             navigate("/login", {
                 state:{from: window.location.pathname}
             });
             return;
         }
+
         addToCart(product)
     }
     

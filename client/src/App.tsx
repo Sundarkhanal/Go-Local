@@ -22,7 +22,7 @@ function App() {
       </Route>
 
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login setCart = {setCart} />} />
       <Route path="/register" element={<Register />} />
 
       <Route element={<ProtectedRoute />}>
