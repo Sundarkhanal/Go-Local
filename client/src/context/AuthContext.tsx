@@ -1,60 +1,51 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import axiosInstance from "../lib/http/axios.config"
 
-interface IAuthContextType{
-    user:any,
-    setUser: React.Dispatch<React.SetStateAction<any>>
-    loading:boolean
-    login: (data:any) => void
-    logout:() => void
+interface IAuthContextType {
+  user: any
+  setUser: React.Dispatch<React.SetStateAction<any>>
+  loading: boolean
+  login: (data: any) => void
+  logout: () => void
 }
 
-const AuthContext = createContext<IAuthContextType | null>(null);
-export const AuthProvider  = ({children}:any) => {
-    const [user, setUser] = useState<any>(null)
-    const [loading, setLoading] = useState(true)
+const AuthContext = createContext<IAuthContextType | null>(null)
 
-    const fetchUser = async() => {
-        try {
-            const res = await axiosInstance.get("auth/me", {
-                withCredentials:true
-            });
-            setUser(res.data.data)
-        } catch (error) {
-            setUser(null)
-        } finally{
-            setLoading(false)
-        }
+export const AuthProvider = ({ children }: any) => {
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
+  const fetchUser = async () => {
+    try {
+      const res = await axiosInstance.get("auth/me")
+      setUser(res.data.data)  // ✅ fixed key
+    } catch {
+      setUser(null)
+    } finally {
+      setLoading(false)
     }
-    useEffect(() => {
-        fetchUser()
-    }, []);
+  }
 
-    const login = (data:any) => {
-        setUser(data)
-    }
+  const login = (data: any) => setUser(data)
 
-    const logout = async() => {
-        await axiosInstance.post("auth/logout")
-        setUser(null)
-    }
+  const logout = async () => {
+    await axiosInstance.post("auth/logout")
+    setUser(null)
+  }
 
-    return(
-        <AuthContext.Provider
-        value={{user, setUser, loading, login, logout}}>
-            {children}
-        </AuthContext.Provider>
+  useEffect(() => {
+    fetchUser()
+  }, [])
 
-    )
-
+  return (
+    <AuthContext.Provider value={{ user, setUser, loading, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
+
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-
-    if (!context) {
-        throw new Error("useAuth must be used inside AuthProvider");
-    }
-
-    return context;
+  const ctx = useContext(AuthContext)
+  if (!ctx) throw new Error("useAuth must be used inside AuthProvider")
+  return ctx
 }

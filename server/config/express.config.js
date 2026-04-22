@@ -41,7 +41,7 @@ app.use(express.urlencoded({
 
 app.use('/api/v1',router);
 
-app.use('assets/', express.static('./public/uploads/'))  
+app.use('/assets', express.static('./public/uploads/'))  
 
 app.use((req, res, next) => {
     next({

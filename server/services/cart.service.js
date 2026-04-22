@@ -2,17 +2,17 @@ const CartModel = require("../models/cart.model");
 const ProductModel = require("../models/product.model");
 
 class CartService {
-    // Add product to cart
+
     async addToCart(userId, productId, quantity) {
         try {
-            // Find the product in DB
-            const product = await ProductModel.findById(productId);
+
+            const product =  await ProductModel.findById(productId);
             if (!product) {
                 throw new Error("Product not found");
             }
             let cart = await CartModel.findOne({ user: userId });
 
-            // If no cart exists, create one
+
             if (!cart) {
                 cart = new CartModel({
                     user: userId,
@@ -24,16 +24,15 @@ class CartService {
                     totalPrice: product.price * quantity
                 });
             } else {
-                // Check if product already exists in cart
+
                 const itemIndex = cart.items.findIndex(
                     item => item.productId.toString() === product._id.toString()
                 );
 
                 if (itemIndex > -1) {
-                    // Product exists → update quantity
+
                     cart.items[itemIndex].quantity += quantity;
                 } else {
-                    // Product not in cart → push new item
                     cart.items.push({
                         productId: product._id,
                         quantity,
@@ -41,14 +40,12 @@ class CartService {
                     });
                 }
 
-                // Update total price
                 cart.totalPrice = cart.items.reduce(
                     (total, item) => total + item.quantity * item.price,
                     0
                 );
             }
 
-            //  Save cart
             await cart.save();
             return cart;
         } catch (error) {
@@ -59,9 +56,8 @@ class CartService {
 
     async getCart(userId) {
         try {
-            const cart = await CartModel.findOne({ user: userId })
-                .populate("items.productId", "name price"); // optional populate
-            return cart;
+            return await CartModel.findOne({ user: userId })
+                .populate("items.productId", "name price"); 
         } catch (error) {
             throw error;
         }
@@ -76,7 +72,6 @@ class CartService {
                 item => item.productId.toString() !== productId
             ); //"Remove the item whose productId matches"
 
-            // Recalculate total price
             cart.totalPrice = cart.items.reduce(
                 (total, item) => total + item.quantity * item.price,
                 0
@@ -89,7 +84,6 @@ class CartService {
         }
     }
 
-    // Update quantity of a product
     async updateCartItem(userId, productId, quantity) {
         try {
             const cart = await CartModel.findOne({ user: userId });
@@ -101,7 +95,6 @@ class CartService {
 
             if (itemIndex === -1) throw new Error("Product not in cart");
 
-            // Update quantity
             cart.items[itemIndex].quantity = quantity;
 
             // Recalculate total price
@@ -117,7 +110,6 @@ class CartService {
         }
     }
 
-    // Clear entire cart
     async clearCart(userId) {
         try {
             const cart = await CartModel.findOne({ user: userId });
