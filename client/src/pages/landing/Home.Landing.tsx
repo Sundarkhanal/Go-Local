@@ -3,6 +3,9 @@ import product1 from "../../assets/images/products/product1.jpeg"
 import product2 from "../../assets/images/products/product2.jpeg"
 import product3 from "../../assets/images/products/product3.jpeg"
 import product4 from "../../assets/images/products/product4.jpeg"
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router";
+
 
 interface IHomeProps {
   cart: any[];
@@ -10,6 +13,8 @@ interface IHomeProps {
 }
 
 const Home = ({cart, setCart}: IHomeProps) => {
+    const {user} = useAuth()
+    const navigate = useNavigate()
     const addToCart = (product:any) => {
         const existing = cart.find((item:any) => item.id === product.id)
 
@@ -23,6 +28,15 @@ const Home = ({cart, setCart}: IHomeProps) => {
         } else{
             setCart([...cart, {...product, quantity:1}])
         }
+    }
+    const handleAddToCart = (product:any) => {
+        if(!user){
+            navigate("/login", {
+                state:{from: window.location.pathname}
+            });
+            return;
+        }
+        addToCart(product)
     }
     
 
@@ -174,7 +188,7 @@ const Home = ({cart, setCart}: IHomeProps) => {
                 name={item.name}
                 price={item.price}
                 image={item.image}
-                onAdd={() => addToCart(item)}
+                onAdd={() => handleAddToCart(item)}
                 />
                ))} 
                 

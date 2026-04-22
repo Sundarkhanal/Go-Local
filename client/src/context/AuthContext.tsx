@@ -19,7 +19,7 @@ export const AuthProvider  = ({children}:any) => {
             const res = await axiosInstance.get("auth/me", {
                 withCredentials:true
             });
-            setUser(res.data.user)
+            setUser(res.data.data)
         } catch (error) {
             setUser(null)
         } finally{

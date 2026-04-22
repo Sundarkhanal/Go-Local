@@ -263,7 +263,7 @@ class AuthController{
 
     logout = (req, res, next) =>{
         try {
-            res.clearCookie("Authorization")
+            res.clearCookie("token")
 
             res.json({
                 message:"Logged out successfully",

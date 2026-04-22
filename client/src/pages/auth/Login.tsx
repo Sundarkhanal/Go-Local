@@ -1,13 +1,14 @@
 import { useState } from "react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import axiosInstance from "../../lib/http/axios.config"
-import Cookies from "js-cookie"
 import { useAuth } from "../../context/AuthContext"
 
 
 
 const Login = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from || '/'
   const {login} = useAuth()
     const [form, setForm] = useState({
         email:"",
@@ -30,7 +31,7 @@ const Login = () => {
 
             // console.log("UserProfile",userProfile);
             
-            navigate("/")
+            navigate(from)
             
             
         } catch (error:any) {
@@ -41,12 +42,10 @@ const Login = () => {
          <div className="flex items-center justify-center min-h-[90vh] bg-gray-50">
         <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
 
-            {/* Title */}
             <h2 className="text-2xl font-bold text-center mb-6 text-teal-600">
             Login to your account
             </h2>
 
-        {/* Email Input */}
         <input
           type="email"
           placeholder="Enter your email"
@@ -57,7 +56,6 @@ const Login = () => {
           }
         />
 
-        {/* Password Input */}
         <input
           type="password"
           placeholder="Enter your password"
@@ -68,14 +66,13 @@ const Login = () => {
           }
         />
 
-        {/* Forgot Password */}
         <div className="text-right mb-4">
           <span className="text-sm text-teal-600 cursor-pointer hover:underline">
             Forgot Password?
           </span>
         </div>
 
-        {/* Login Button */}
+
         <button
           onClick={handleLogin}
           className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition"
@@ -83,7 +80,6 @@ const Login = () => {
           Login
         </button>
 
-        {/* Register Redirect */}
         <p className="text-center text-sm text-gray-500 mt-4">
           Don’t have an account?{" "}
           <span

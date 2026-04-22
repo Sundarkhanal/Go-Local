@@ -13,7 +13,7 @@ authRouter.post('/login', validator(LoginDTO), authCtrl.login)
 authRouter.get('/me',checkPermission(), authCtrl.getLoggedInUser)
 authRouter.post('/forget-password', authCtrl.forgetPassword)
 authRouter.post('/reset-password', authCtrl.resetPassword)
-authRouter.get('/logout', authCtrl.logout )
+authRouter.post('/logout', authCtrl.logout )
 
 
 
