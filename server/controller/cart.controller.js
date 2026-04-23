@@ -4,9 +4,12 @@ class CartController {
     // Add product to cart
     async addToCart(req, res, next) {
         try {
-            const userId = req.loggedInUser._id// from auth middleware
+            const userId = req.loggedInUser._id// from auth middleware  
+            
             
             const { productId, quantity } = req.body;
+            console.log(productId);
+            console.log(quantity);
 
             const cart = await CartService.addToCart(userId, productId, quantity);
 
@@ -60,6 +63,7 @@ class CartController {
         try {
             const userId = req.loggedInUser._id;
             const { productId } = req.params;
+            
             const { quantity } = req.body;
 
             const cart = await CartService.updateCartItem(userId, productId, quantity);

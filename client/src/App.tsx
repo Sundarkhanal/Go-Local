@@ -14,13 +14,17 @@ function App() {
 
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+
+        {/* ✅ Protected routes inside MainLayout */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="cart" element={<Cart />} />
+          <Route path="checkout" element={<div>Checkout</div>} />
+          <Route path="orders" element={<div>Orders</div>} />
+          <Route path="profile" element={<div>Profile</div>} />
+        </Route>
+
       </Route>
 
-      <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<MainLayout />}>
-          <Route path="/cart" element={<Cart />} />
-        </Route>
-      </Route>
     </Routes>
   );
 }

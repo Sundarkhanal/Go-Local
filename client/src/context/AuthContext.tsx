@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: any) => {
   const fetchUser = async () => {
     try {
       const res = await axiosInstance.get("auth/me")
-      setUser(res.data.data)  // ✅ fixed key
+      setUser(res.data.data)  
     } catch {
       setUser(null)
     } finally {

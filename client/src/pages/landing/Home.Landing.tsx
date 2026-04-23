@@ -14,6 +14,8 @@ const Home = () => {
     const [products, setProducts ] = useState<any[]>([])
 
     const handleAddToCart = (product: any) => {
+        console.log("Product", product);
+        
         if (!user) {
             const existing = JSON.parse(localStorage.getItem("guest_cart") || "[]")
             const updatedCart = [...existing, { ...product, quantity: 1 }]

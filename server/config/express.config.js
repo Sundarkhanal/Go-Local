@@ -23,7 +23,7 @@ app.use(helmet({
 // limit policy
 const limiter = rateLimit({
     windowMs:1*60*1000,   //should be in ms
-    limit: 15,
+    limit: 30,
 })
 app.use(limiter)
 

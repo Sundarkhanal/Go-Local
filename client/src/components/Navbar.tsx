@@ -65,9 +65,22 @@ const Navbar = () => {
                 <a href="#" className="block">About</a>
                 <a href="#" className="block">Products</a>
                 <a href="#" className="block">Categories</a>
-                <button className="block w-full text-left">Cart</button>
-                <button className="block w-full border p-2 rounded">Login</button>
-                <button className="block w-full bg-teal-600 text-white p-2 rounded">Register</button>
+                <Link to="/cart">
+                    <button className="hover:shadow-md transition duration-200 cursor-pointer">
+                      Cart
+                      {cart.length > 0 && (
+                        <span className="ml-1 bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full">
+                          {cart.length}
+                        </span>
+                      )}
+                    </button>
+                  </Link>
+                     <Link to="/login">
+                        <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-teal-600 hover:text-white">Login</button>
+                      </Link>
+                      <Link to="/register">
+                        <button className="px-4 py-1 bg-teal-600 text-white rounded hover:bg-teal-900">Register</button>
+                      </Link>
               </div>
             )}
 

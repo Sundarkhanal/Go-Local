@@ -11,8 +11,8 @@ export const CartProvider = ({ children }: any) => {
   // fetch cart from backend when user logs in
   const fetchCart = async () => {
     try {
-      const res = await axiosInstance.get("cart/get-cart")
-      setCart(res.data.data ?? [])
+      const res = await axiosInstance.get("cart/get-cart")      
+      setCart(res.data.data.items ?? [])
     } catch (error) {
       console.log("Fetch cart error:", error)
     }
@@ -21,8 +21,8 @@ export const CartProvider = ({ children }: any) => {
   // add item to backend cart
   const addToCart = async (product: any) => {
     try {
-      await axiosInstance.post("/cart/add", {
-        productId: product.id,
+      await axiosInstance.post("cart/add", {
+        productId: product._id,
         quantity: 1,
       })
       await fetchCart()  // refresh cart after adding
@@ -34,10 +34,34 @@ export const CartProvider = ({ children }: any) => {
   // remove item from backend cart
   const removeFromCart = async (productId: string) => {
     try {
-      await axiosInstance.delete(`/cart/remove/${productId}`)
+      await axiosInstance.delete(`cart/remove/${productId}`)
       await fetchCart()
     } catch (error) {
       console.log("Remove from cart error:", error)
+    }
+  }
+  const updateCartItem = async(productId: string, quantity:number) => {
+    if (quantity<1) {
+        return
+    }
+    try {
+        await axiosInstance.put(`cart/update/${productId}`, {
+            quantity
+        })
+        await fetchCart()
+    } catch (error) {
+        console.log(error);
+        
+    }
+  }
+  const clearCart = async() => {
+    try {
+        await axiosInstance.delete("cart/clear")
+        await fetchCart()
+        
+    } catch (error) {
+        console.log(error);
+        
     }
   }
 
@@ -51,7 +75,7 @@ export const CartProvider = ({ children }: any) => {
   }, [user])
 
   return (
-    <CartContext.Provider value={{ cart, fetchCart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, fetchCart, addToCart, removeFromCart, updateCartItem, clearCart }}>
       {children}
     </CartContext.Provider>
   )
