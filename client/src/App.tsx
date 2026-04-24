@@ -5,6 +5,8 @@ import Cart from "./pages/cart/Cart";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import ProtectedRoute from "./routes/ProtectedRoutes";
+import Checkout from "./pages/checkout/Checkout";
+
 
 function App() {
   return (
@@ -18,7 +20,7 @@ function App() {
         {/* ✅ Protected routes inside MainLayout */}
         <Route element={<ProtectedRoute />}>
           <Route path="cart" element={<Cart />} />
-          <Route path="checkout" element={<div>Checkout</div>} />
+          <Route path="checkout" element={<Checkout/>}/>
           <Route path="orders" element={<div>Orders</div>} />
           <Route path="profile" element={<div>Profile</div>} />
         </Route>

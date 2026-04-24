@@ -11,7 +11,6 @@ class OrderService{
                 throw{code:400, message:"Products Cannot be Empty", status:"EMPTY_PRODUCT_ERR"}
             }
 
-            //extract product Ids
             const productIds = products.map(item  => item.productId)
 
             //fetch all products
@@ -27,7 +26,7 @@ class OrderService{
             let totalPrice = 0
             let orderProducts = []
 
-            //validating stock and calculating total
+
             for (let items of products){
 
                 const product = productDetails.find(

@@ -2,14 +2,14 @@ import { useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import axiosInstance from "../../lib/http/axios.config"
 import { useAuth } from "../../context/AuthContext"
-import { useCart } from "../../context/CartContext"  // ✅ moved inside file
+import { useCart } from "../../context/CartContext" 
 
 const Login = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
   const { login } = useAuth()
-  const { fetchCart } = useCart()  // ✅ moved inside component
+  const { fetchCart } = useCart() 
   const [form, setForm] = useState({
     email: "",
     password: ""
