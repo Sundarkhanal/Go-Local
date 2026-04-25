@@ -35,18 +35,15 @@ const Checkout = () => {
             }, {
                 withCredentials: true
             });
-            const orderId = orderRes.data.data._id
-
-            const paymentRes = await axiosInstance.post("payment/initiate", {
+            const paymentRes = await axiosInstance.post("payment/initiate",{}, {
                 withCredentials: true
             })
-            redirectToEsewa(
-                paymentRes.data.paymentUrl,
-                paymentRes.data.payload
-            )
+            console.log("full paymentRes.data:", JSON.stringify(paymentRes.data, null, 2))
             
-
-            window.location.href = paymentRes.data.paymentUrl
+            redirectToEsewa(
+                paymentRes.data.data.paymentUrl,
+                paymentRes.data.data.payload
+            )
             
         } catch (error: any) {
             console.log('Checkout Error:', error.response?.data);

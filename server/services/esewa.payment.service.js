@@ -3,6 +3,7 @@ const cartService = require("./cart.service")
 const Payment = require("../models/esewa.payment.model")
 const { generateEsewaSignature } = require("../utilities/helper")
 const OrderModel = require("../models/order.model")
+const crypto = require("crypto")
 
 
 class EPaymentService{
@@ -20,7 +21,7 @@ class EPaymentService{
                 (total, item) => total + item.quantity * item.price, 0
             )
 
-            const transactionId = `${userCart._id}-${Date.now()}`
+            const transactionId = crypto.randomUUID()
             await Payment.create({
                 transactionId: transactionId,
                 amount:totalPrice,
@@ -35,9 +36,12 @@ class EPaymentService{
                 success_url:"http://localhost:9005/payment/success",
                 failure_url:"http://localhost:9005/payment/failed"
             }
-
+            
+            
             payload.signature = generateEsewaSignature(payload)
-            const esewaUrl = "https://rc-epay.esewa.com.np/api/epay/main/v2/form"
+            console.log(payload);
+            
+            const esewaUrl = `${process.env.ESEWA_GATEWAY_URL}/api/epay/main/v2/form`
             return{
                 paymentUrl: esewaUrl,
                 payload

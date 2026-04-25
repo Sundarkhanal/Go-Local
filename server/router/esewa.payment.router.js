@@ -4,7 +4,7 @@ const paymentCtrl = require("../controller/esewa.payment.controller")
 
 epaymentRouter.post('/initiate', checkPermission(), paymentCtrl.initiatePayment)
 epaymentRouter.get('/success', checkPermission(), paymentCtrl.paymentSuccess)
-epaymentRouter.get('/failure', checkPermission(), )
+epaymentRouter.get('/failure', checkPermission(), paymentCtrl.paymentFailed)
 
 
 
