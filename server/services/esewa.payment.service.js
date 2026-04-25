@@ -37,7 +37,12 @@ class EPaymentService{
             }
 
             payload.signature = generateEsewaSignature(payload)
-            return payload
+            const esewaUrl = "https://rc-epay.esewa.com.np/api/epay/main/v2/form"
+            return{
+                paymentUrl: esewaUrl,
+                payload
+                
+            } 
             
         } catch (exception) {
             throw exception

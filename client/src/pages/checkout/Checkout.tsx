@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../lib/http/axios.config";
+import { redirectToEsewa } from "../../lib/payment/esewa";
 
-const Checkout = async() => {
+const Checkout = () => {
     const{cart, clearCart} = useCart()
     const{user} = useAuth()
     const [form, setForm] = useState({
@@ -19,34 +20,39 @@ const Checkout = async() => {
     }, 0 )
 
     const handleOrder = async() => {
-        try {
-            if (!form.fullname || !form.address || form.phone || form.notes) {
+        try {            
+            if (!form.fullname || !form.address || !form.phone) {
                 alert("Please Enter all fields")
                 return
             }
             setLoading(true)
 
             const orderRes = await axiosInstance.post("orders/create-order", {
-                shippingAddress: form,
-                items: cart,
-                totalAmount: total
+                products: cart.map((item:any) => ({
+                    productId: item.productId._id,
+                    quantity: item.quantity
+                }))
             }, {
                 withCredentials: true
             });
             const orderId = orderRes.data.data._id
 
             const paymentRes = await axiosInstance.post("payment/initiate", {
-                orderId,
-                amount: total
-            }, {
                 withCredentials: true
             })
+            redirectToEsewa(
+                paymentRes.data.paymentUrl,
+                paymentRes.data.payload
+            )
+            
 
             window.location.href = paymentRes.data.paymentUrl
             
         } catch (error: any) {
             console.log('Checkout Error:', error.response?.data);
             
+        } finally{
+            setLoading(false)
         }
     }
     return (
@@ -112,13 +118,13 @@ const Checkout = async() => {
             
         {cart.map((item: any) => (
             <div
-            key={item._id || item.id}
+            key={item.productId?._id || item.id}
             className="flex justify-between text-sm"
             >
             <span>
-                {item.productId.name} x {item.quantity}
+                {item.productId?.name } x {item.quantity}
             </span>
-            <span>Rs {item.price * item.quantity}</span>
+            <span>Rs {item.productId.price * item.quantity}</span>
             </div>
         ))}
         </div>
@@ -133,7 +139,7 @@ const Checkout = async() => {
         <button
         onClick={handleOrder}
         disabled={loading}
-        className="w-full mt-6 bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition"
+        className="w-full mt-6 bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition cursor-pointer"
         >
         {loading ? "Processing..." : "Place Order"}
         </button>

@@ -9,6 +9,7 @@ class PaymentController{
             const paidUser = await EPaymentService.initiatePayment(userId)
 
             res.json({
+                paymentUrl: paidUser.paymentUrl,
                 data:paidUser,
                 message:"Payment Started",
                 status:"Ok"
