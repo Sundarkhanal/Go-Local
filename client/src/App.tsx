@@ -1,12 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
-import Home from "./pages/landing/Home.Landing";
-import Cart from "./pages/cart/Cart";
-import Register from "./pages/auth/Register";
-import Login from "./pages/auth/Login";
-import ProtectedRoute from "./routes/ProtectedRoutes";
-import Checkout from "./pages/checkout/Checkout";
 
+
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import UserRoutes from "./routes/User.routes";
+import AdminRoutes from "./routes/Admin.routes";
 
 function App() {
   return (
@@ -14,19 +12,11 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<Home />} />
+      {/* user routes */}
+      <Route path="/*" element={<UserRoutes />} />
 
-        {/* ✅ Protected routes inside MainLayout */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="cart" element={<Cart />} />
-          <Route path="checkout" element={<Checkout/>}/>
-          <Route path="orders" element={<div>Orders</div>} />
-          <Route path="profile" element={<div>Profile</div>} />
-        </Route>
-
-      </Route>
-
+      {/* admin routes */}
+      <Route path="/admin*" element={<AdminRoutes/>} />
     </Routes>
   );
 }

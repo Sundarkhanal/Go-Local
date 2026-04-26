@@ -39,7 +39,6 @@ class EPaymentService{
             
             
             payload.signature = generateEsewaSignature(payload)
-            console.log(payload);
             
             const esewaUrl = `${process.env.ESEWA_GATEWAY_URL}/api/epay/main/v2/form`
             return{

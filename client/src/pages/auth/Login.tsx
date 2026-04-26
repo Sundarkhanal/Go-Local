@@ -1,14 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import axiosInstance from "../../lib/http/axios.config"
 import { useAuth } from "../../context/AuthContext"
 import { useCart } from "../../context/CartContext" 
+import { toast } from "sonner"
 
 const Login = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from || '/'
-  const { login } = useAuth()
+  const { login, user } = useAuth()
   const { fetchCart } = useCart() 
   const [form, setForm] = useState({
     email: "",
@@ -27,12 +28,20 @@ const Login = () => {
       }
 
       await fetchCart()
-      alert("Logged In Successfully!")
+      toast.success("Logged In successfully", {
+        description: "Your account has been successfully logged In"
+      })
       navigate(from, { replace: true })
     } catch (error: any) {
       console.log(error.response?.data)
     }
   }
+  // useEffect(() => {
+  //   if (user) {
+  //     toast.info("You are already Logged In")
+  //     navigate("/"+user.role)
+  //   }
+  // }, [user])
 
   return (
     <div className="flex items-center justify-center min-h-[90vh] bg-gray-50">
@@ -66,7 +75,7 @@ const Login = () => {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition"
+          className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition cursor-pointer"
         >
           Login
         </button>
@@ -75,7 +84,7 @@ const Login = () => {
           Don't have an account?{" "}
           <span
             onClick={() => navigate("/register")}
-            className="text-teal-600 cursor-pointer hover:underline"
+            className="text-teal-600 cursor-pointer hover:underline cursor-pointer"
           >
             Register
           </span>

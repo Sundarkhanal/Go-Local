@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import axiosInstance from "../../lib/http/axios.config";
+import { toast } from "sonner";
 
 
 
@@ -26,11 +27,14 @@ const Register = () => {
     }
     const response = await axiosInstance.post("auth/register", payload)
     console.log(response.data);
-    alert("User Registered Successfully")
+    toast.success("Congratulations!", {
+      description:"Your account has been registered successfully. Please login to  continue"
+    })
+    navigate("/login")
 
   } catch (error:any) {
     console.error(error.response?.data);
-    alert(error.response?.data?.message);
+    toast("Sorry! We cannot register you at this moment!")
   }
 };
 

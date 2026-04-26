@@ -4,6 +4,7 @@ import axiosInstance from "../lib/http/axios.config"
 interface IAuthContextType {
   user: any
   setUser: React.Dispatch<React.SetStateAction<any>>
+  fetchUser:() => Promise<void>
   loading: boolean
   login: (data: any) => void
   logout: () => void
@@ -38,14 +39,14 @@ export const AuthProvider = ({ children }: any) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser,fetchUser, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
 }
 
 export const useAuth = () => {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider")
-  return ctx
+  const context = useContext(AuthContext)
+  if (!context) throw new Error("useAuth must be used inside AuthProvider")
+  return context
 }

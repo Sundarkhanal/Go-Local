@@ -1,24 +1,21 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "sonner";
 
-const ProtectedRoute = () => {
-  const { user, loading } = useAuth();
-  const location = useLocation();
 
-  // wait until /me finishes
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+const ProtectedRoute = ({ children, role }: any) => {
+  const { user: loggedInUser } = useAuth();
+  const navigate = useNavigate();
 
-  // if not logged in → redirect
-  if (!user) {
-    return <Navigate to="/login"
-    state={{from:location.pathname}}
-    replace />;
-  }
+  useEffect(() => {
+    if (loggedInUser && role && role !== loggedInUser.role) {
+      toast.warning("You do not have permission to access this panel!");
+      navigate("/");
+    }
+  }, [loggedInUser]);
 
-  // if logged in → allow access
-  return <Outlet />;
+  return children;
 };
 
 export default ProtectedRoute;
