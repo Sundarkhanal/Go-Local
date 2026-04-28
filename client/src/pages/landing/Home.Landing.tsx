@@ -1,10 +1,11 @@
-import ProducCart from "../../components/ProductCart";
+
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import { useNavigate } from "react-router";
 import hero from "../../assets/images/hero.png";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../lib/http/axios.config";
+import { ProductCart } from "../../components/ProductCart";
 
 
 const Home = () => {
@@ -128,7 +129,7 @@ const Home = () => {
                 <h2 className="text-2xl font-bold text-gray-800 mb-8">Featured Products</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {products.slice(0, 4).map((item) => (
-                        <ProducCart
+                        <ProductCart
                             key={item._id}
                             name={item.name}
                             price={item.price}

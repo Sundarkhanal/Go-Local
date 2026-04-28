@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import Cart from "../pages/cart/Cart";
 import Checkout from "../pages/checkout/Checkout";
 import UserCategories from "../pages/user/UserCategories";
+import { Products } from "../pages/user/UserProducts";
 
 
 
@@ -25,7 +26,7 @@ function UserRoutes() {
           <Route path="user/cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout/>}/>
           <Route path="user/categories" element={<UserCategories/>} />
-          <Route path="user/product" element={<div>Profile</div>} />
+          <Route path="user/products" element={<Products />}/>
         </Route>
 
       </Route>
