@@ -4,6 +4,7 @@ import Dashboard from "../pages/admin/Dashboard";
 import ProtectedRoute from "./ProtectedRoutes";
 import Product from "../pages/admin/Products";
 import { Categories } from "../pages/admin/Categories";
+import { AddProducts } from "../pages/admin/AddProducts";
 
 
 const AdminRoutes = () => {
@@ -15,6 +16,7 @@ const AdminRoutes = () => {
         <Route index element={<Dashboard />} />
         <Route path="products" element={<Product/>} />
         <Route path="categories" element={<Categories/>}/>
+        <Route path="add-products" element={<AddProducts />} />
       </Route>
 
     </Routes>

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import ProductsTable from "../../components/common/Table"
 import axiosInstance from "../../lib/http/axios.config"
+import { useNavigate } from "react-router"
 
 const Product = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     const [showModel, setShowModel] = useState(false)
+    const navigate = useNavigate()
     const fetchProducts = async() => {
         try {
             setLoading(true);
@@ -22,11 +24,12 @@ const Product = () => {
         useEffect(() => {
         fetchProducts()  
     }, [])
+
     return(
         <>
         <div className="flex justify-end mb-3">
-            <button
-            className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition"
+            <button onClick={() => navigate("/admin/add-products")}
+            className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition cursor-pointer"
              >
             + Add Product
             </button>

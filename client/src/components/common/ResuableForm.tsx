@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 interface Field{
     name: string,
@@ -15,6 +15,7 @@ interface IFormProps{
 
 export const ResuableForm = ({fields, onSubmit, buttonText = "submit"}: IFormProps) => {
     const [form, setForm] = useState({})
+    const formRef = useRef<HTMLFormElement>(null)
 
     const handleChange = (e:any, field:Field) => {
         const {name, value, files} = e.target
@@ -23,9 +24,12 @@ export const ResuableForm = ({fields, onSubmit, buttonText = "submit"}: IFormPro
             [name]: field.type === "file"? files[0]: value
         })
     };
-    const handleSubmit = (e:any) => {
+    const handleSubmit = async(e:any) => {
         e.preventDefault();
-        onSubmit(form)
+        await onSubmit(form)
+        setForm({})
+        formRef?.current?.reset()
+        
     }
 
     return(

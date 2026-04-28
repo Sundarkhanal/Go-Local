@@ -127,7 +127,7 @@ const Home = () => {
             <section className="gap-12 py-16 px-6 max-w-7xl mx-auto">
                 <h2 className="text-2xl font-bold text-gray-800 mb-8">Featured Products</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    {products.map((item) => (
+                    {products.slice(0, 4).map((item) => (
                         <ProducCart
                             key={item._id}
                             name={item.name}

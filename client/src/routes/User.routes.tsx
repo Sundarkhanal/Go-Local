@@ -25,7 +25,7 @@ function UserRoutes() {
           <Route path="user/cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout/>}/>
           <Route path="user/categories" element={<UserCategories/>} />
-          <Route path="profile" element={<div>Profile</div>} />
+          <Route path="user/product" element={<div>Profile</div>} />
         </Route>
 
       </Route>
