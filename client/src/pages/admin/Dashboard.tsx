@@ -1,3 +1,5 @@
+import { Outlet } from "react-router";
+
 const Dashboard = () => {
   return (
     <div>
@@ -14,10 +16,14 @@ const Dashboard = () => {
 
         <div className="bg-white p-4 rounded shadow">
           Orders
+
         </div>
       </div>
+      
     </div>
+    
   );
+ < Outlet/>
 };
 
 export default Dashboard;

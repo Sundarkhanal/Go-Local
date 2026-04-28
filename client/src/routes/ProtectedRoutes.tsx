@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "sonner";
 
@@ -14,8 +14,11 @@ const ProtectedRoute = ({ children, role }: any) => {
       navigate("/");
     }
   }, [loggedInUser]);
+  if (children) {
+    return children
+  }
 
-  return children;
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

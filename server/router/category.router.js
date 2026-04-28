@@ -15,10 +15,10 @@ const categoryDTO = Joi.object({
 
 categoryRouter.post('/create-category',checkpermission(),validator(categoryDTO), categoryCtrl.createCategory)  //todo check permission 
 categoryRouter.get('/get-data', categoryCtrl.listAllCategory)
-categoryRouter.get('/:blogId', categoryCtrl.getCategoryById)
+categoryRouter.get('/:categoryId', categoryCtrl.getCategoryById)
 categoryRouter.get('/by-slug/:slug', categoryCtrl.getcategoryBySlug)
-categoryRouter.put('/:blogId',checkpermission(), validator(categoryDTO), categoryCtrl.updatecategoryById) // todo check permission
-categoryRouter.delete('/:blogId', categoryCtrl.deleteCategoryById)
+categoryRouter.put('/:categoryId',checkpermission(), validator(categoryDTO), categoryCtrl.updatecategoryById) // todo check permission
+categoryRouter.delete('/:categoryId', checkpermission(), categoryCtrl.deleteCategoryById)
 
 
 

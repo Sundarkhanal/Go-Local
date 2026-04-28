@@ -3,6 +3,7 @@ import AdminLayout from "../pages/admin/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import ProtectedRoute from "./ProtectedRoutes";
 import Product from "../pages/admin/Products";
+import { Categories } from "../pages/admin/Categories";
 
 
 const AdminRoutes = () => {
@@ -12,7 +13,8 @@ const AdminRoutes = () => {
       {/* ADMIN ROUTES */}
       <Route path="/" element={<ProtectedRoute role = "admin"> <AdminLayout /></ProtectedRoute>}>
         <Route index element={<Dashboard />} />
-        <Route path="/products" element={<Product/>} />
+        <Route path="products" element={<Product/>} />
+        <Route path="categories" element={<Categories/>}/>
       </Route>
 
     </Routes>

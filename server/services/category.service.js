@@ -35,7 +35,7 @@ class CategoryService{
         try {
             //fetch all data
             const data = await CategoryModel.find(filter)
-            .populate("parent", "name", "slug")
+            .populate("parent", "name")
             .limit(limit)
             .skip(((page-1)* limit))
             .sort({createdAt: "desc"}); //newest first

@@ -11,12 +11,12 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      {/* admin routes */}
+      <Route path="/admin/*" element={<AdminRoutes/>} />
 
       {/* user routes */}
       <Route path="/*" element={<UserRoutes />} />
 
-      {/* admin routes */}
-      <Route path="/admin*" element={<AdminRoutes/>} />
     </Routes>
   );
 }

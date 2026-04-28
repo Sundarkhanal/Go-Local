@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
@@ -7,6 +7,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   const { cart } = useCart()
+  const navigate = useNavigate()
 
   return (
     <header className="bg-white shadow-sm relative sticky top-0 z-50">
@@ -25,10 +26,15 @@ const Navbar = () => {
               <ul className="flex items-center gap-6 text-sm">
                 <li><a className="hover:text-teal-900 transition duration-200" href="#">About</a></li>
                 <li><a className="hover:text-teal-900 transition duration-200" href="#">Products</a></li>
-                <li><a className="hover:text-teal-900 transition duration-200" href="#">Categories</a></li>
+                <li>  <Link
+                        to="/user/categories"
+                        className="hover:text-teal-900 transition duration-200"
+                      >
+                        Categories
+                      </Link></li>
 
                 <div className="flex items-center gap-4">
-                  <Link to="/cart">
+                  <Link to="/user/cart">
                     <button className="hover:shadow-md transition duration-200 cursor-pointer">
                       Cart
                       {cart.length > 0 && (
