@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
 import axiosInstance from "../../lib/http/axios.config"
 import { ResuableForm } from "../../components/common/ResuableForm"
+import { useParams } from "react-router"
+import { toast } from "sonner"
 
 export const Categories = () => {
     const [Categories, setCategories] = useState([])
+    const {id} = useParams()
 
     const fetchCategories = async() => {
         const res = await axiosInstance.get("category/get-data")
@@ -28,12 +31,14 @@ export const Categories = () => {
 
     const deleteCategory = async(id: string) => {
         try {
-            await axiosInstance.delete(`categories/${id}`, {
+            await axiosInstance.delete(`category/${id}`, {
                 withCredentials: true
             })
+            toast.success("Category deleted successfully!")
             fetchCategories()
         } catch (error:any) {
             console.log(error.response?.data);
+            toast.error("Error in deleting Category")
             
         }
     }
