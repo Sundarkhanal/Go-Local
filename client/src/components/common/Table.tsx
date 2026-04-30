@@ -2,6 +2,8 @@ import { FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { RowSkeleton } from "../ui/table/Row";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import axiosInstance from "../../lib/http/axios.config";
 
 interface IProductsTableProps{
     products: any[],
@@ -11,6 +13,20 @@ interface IProductsTableProps{
 
 const ProductsTable = ({products, loading, fetchProducts}:IProductsTableProps) => {
   const navigate = useNavigate()
+  const handleDelete = async(id:string) => {
+    try {
+      await axiosInstance.delete(`products/${id}`, {
+        withCredentials: true
+      })
+      toast.success("Product Deleted successfully!")
+      fetchProducts()
+      
+    } catch (error) {
+      console.log(error);
+      toast.error("Error deleting in Product")
+      
+    }
+  }
 
 
   return (
@@ -50,11 +66,11 @@ const ProductsTable = ({products, loading, fetchProducts}:IProductsTableProps) =
                 </td>
 
                 <td className="p-4 flex gap-2">
-                <button onClick={() => navigate(`/admin/edit-products/${item._id}`)} className="bg-teal-600 text-white px-3 py-1 rounded">
+                <button onClick={() => navigate(`/admin/edit-products/${item._id}`)} className="bg-teal-600 text-white px-3 py-1 rounded cursor-pointer">
                     <FaPen />
                 </button>
 
-                <button className="bg-red-500 text-white px-3 py-1 rounded">
+                <button onClick={() => handleDelete(item._id)} className="bg-red-500 text-white px-3 py-1 rounded cursor-pointer">
                     <MdDelete />
                 </button>
                 </td>
