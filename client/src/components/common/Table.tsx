@@ -1,6 +1,7 @@
 import { FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { RowSkeleton } from "../ui/table/Row";
+import { useNavigate } from "react-router";
 
 interface IProductsTableProps{
     products: any[],
@@ -9,6 +10,8 @@ interface IProductsTableProps{
 }
 
 const ProductsTable = ({products, loading, fetchProducts}:IProductsTableProps) => {
+  const navigate = useNavigate()
+
 
   return (
     <div className="overflow-x-auto bg-white shadow rounded">
@@ -47,7 +50,7 @@ const ProductsTable = ({products, loading, fetchProducts}:IProductsTableProps) =
                 </td>
 
                 <td className="p-4 flex gap-2">
-                <button className="bg-teal-600 text-white px-3 py-1 rounded">
+                <button onClick={() => navigate(`/admin/edit-products/${item._id}`)} className="bg-teal-600 text-white px-3 py-1 rounded">
                     <FaPen />
                 </button>
 

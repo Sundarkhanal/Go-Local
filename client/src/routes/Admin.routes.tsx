@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import Product from "../pages/admin/Products";
 import { Categories } from "../pages/admin/Categories";
 import { AddProducts } from "../pages/admin/AddProducts";
+import { EditProducts } from "../pages/admin/EditProduct";
 
 
 const AdminRoutes = () => {
@@ -17,6 +18,7 @@ const AdminRoutes = () => {
         <Route path="products" element={<Product/>} />
         <Route path="categories" element={<Categories/>}/>
         <Route path="add-products" element={<AddProducts />} />
+        <Route path="edit-products/:id" element={<EditProducts />} />
       </Route>
 
     </Routes>
