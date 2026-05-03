@@ -22,8 +22,6 @@ function UserRoutes() {
       <Route path="/" element={<MainLayout />}>
       <Route path="/about" element={<About />} />
         <Route index element={<Home />} />
-
-        {/*Protected routes inside MainLayout */}
         <Route element={<ProtectedRoute />}>
           <Route path="user/cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout/>}/>

@@ -74,15 +74,22 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* RIGHT VISUAL */}
-                <div className="w-1/2">
-                    <div className="relative">
-                        <img
-                            src={hero}
-                            className="w-[420px] rounded-3xl shadow-xl object-cover hover:scale-105 transition duration-300"
-                        />
-                        <div className="absolute -z-10 top-8 left-8 w-[400px] h-[400px] bg-yellow-100 blur-3xl opacity-30 rounded-full"></div>
-                    </div>
+                                {/* RIGHT VISUAL */}
+                {/* <div className="w-1/2 flex justify-center items-center">
+                <div className="relative w-[520px] h-[520px] bg-teal-400 rounded-[60%_40%_55%_45%_/_55%_45%_60%_40%] flex items-end justify-center overflow-hidden">
+                    <img
+                    src={hero}
+                    className="w-[90%] h-[90%] object-cover"
+                    />
+                </div>
+                </div> */}
+                <div className="w-1/2 flex justify-center items-center">
+                <div className="relative w-[500px] h-[500px] rounded-full bg-teal-100 ring-8 ring-teal-400 overflow-hidden">
+                    <img
+                    src={hero}
+                    className="w-full h-full object-cover"
+                    />
+                </div>
                 </div>
 
             </div>
