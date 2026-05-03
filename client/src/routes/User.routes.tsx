@@ -9,6 +9,7 @@ import Cart from "../pages/cart/Cart";
 import Checkout from "../pages/checkout/Checkout";
 import UserCategories from "../pages/user/UserCategories";
 import { Products } from "../pages/user/UserProducts";
+import { About } from "../pages/user/About";
 
 
 
@@ -19,6 +20,7 @@ function UserRoutes() {
       <Route path="/register" element={<Register />} />
 
       <Route path="/" element={<MainLayout />}>
+      <Route path="/about" element={<About />} />
         <Route index element={<Home />} />
 
         {/*Protected routes inside MainLayout */}

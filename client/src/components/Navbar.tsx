@@ -24,7 +24,7 @@ const Navbar = () => {
           <div className="md:flex md:items-center md:gap-12">
             <nav className="hidden md:block">
               <ul className="flex items-center gap-6 text-sm">
-                <li><a className="hover:text-teal-900 transition duration-200" href="#">About</a></li>
+                <li><Link to="/about" className="hover:text-teal-900 transition duration-200">About</Link></li>
                 <li><Link
                         to="/user/products"
                         className="hover:text-teal-900 transition duration-200"
