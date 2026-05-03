@@ -1,3 +1,5 @@
+import { useAddToCart } from "../hooks/useAddToCart";
+
 interface IProductProps {
   name: string;
   price: number;
@@ -43,7 +45,7 @@ interface IProductProps {
 
         <button
           className="px-3 py-1 bg-teal-600 text-white rounded hover:shadow cursor-pointer"
-          onClick={onAdd}
+          onClick={() => onAdd()}
         >
           Add
         </button>

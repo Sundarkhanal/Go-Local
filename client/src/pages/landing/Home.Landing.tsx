@@ -1,31 +1,15 @@
 
-import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext";
-import { useNavigate } from "react-router";
 import hero from "../../assets/images/hero.png";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../lib/http/axios.config";
 import { ProductCart } from "../../components/ProductCart";
+import { useAddToCart } from "../../hooks/useAddToCart";
+
 
 
 const Home = () => {
-    const { user } = useAuth()
-    const { addToCart } = useCart()
-    const navigate = useNavigate()
     const [products, setProducts ] = useState<any[]>([])
-
-    const handleAddToCart = (product: any) => {
-        console.log("Product", product);
-        
-        if (!user) {
-            const existing = JSON.parse(localStorage.getItem("guest_cart") || "[]")
-            const updatedCart = [...existing, { ...product, quantity: 1 }]
-            localStorage.setItem("guest_cart", JSON.stringify(updatedCart))
-            navigate("/login", { state: { from: window.location.pathname } })
-            return
-        }
-        addToCart(product)
-    }
+    const {handleAddToCart} = useAddToCart()
 
     useEffect(() => {
         const fetchProducts = async() => {

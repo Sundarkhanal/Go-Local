@@ -34,7 +34,9 @@ export const CartProvider = ({ children }: any) => {
   // remove item from backend cart
   const removeFromCart = async (productId: string) => {
     try {
-      await axiosInstance.delete(`cart/remove/${productId}`)
+      const res = await axiosInstance.delete(`cart/remove/${productId}`, {
+        withCredentials: true
+      })
       await fetchCart()
     } catch (error) {
       console.log("Remove from cart error:", error)

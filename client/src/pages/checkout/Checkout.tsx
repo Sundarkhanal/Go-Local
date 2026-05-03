@@ -16,7 +16,7 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false)
     
     const total = cart.reduce((sum:number, item:any) => {
-        return sum + item.price * item.quantity
+        return sum + item.productId?.price * item.quantity
     }, 0 )
 
     const handleOrder = async() => {
@@ -121,7 +121,7 @@ const Checkout = () => {
             <span>
                 {item.productId?.name } x {item.quantity}
             </span>
-            <span>Rs {item.productId.price * item.quantity}</span>
+            <span>Rs {item.productId?.price * item.quantity}</span>
             </div>
         ))}
         </div>

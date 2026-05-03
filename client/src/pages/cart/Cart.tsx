@@ -20,9 +20,9 @@ const Cart = () => {
             className="flex justify-between items-center bg-white shadow p-4 rounded mb-3"
           >
             <div>
-              <h3 className="font-semibold">{item.name}</h3>
+              <h3 className="font-semibold">{item.productId?.name}</h3>
               <p className="text-teal-600">
-                Rs {item.price} * {item.quantity} = Rs{item.price * item.quantity}
+                Rs {item.productId?.price} * {item.quantity} = Rs{item.productId?.price * item.quantity}
                  </p>
             </div>
             <div className="flex items-center gap-w mt-2">

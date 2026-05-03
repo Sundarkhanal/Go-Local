@@ -35,7 +35,7 @@ class ProductController{
             const query = req.query
 
             let filter = {}
-            let limit = +query.limit || 10
+            let limit = +query.limit || 8
             let page = +query.page || 1
 
             if(query.search){
@@ -68,7 +68,8 @@ class ProductController{
                 meta:{
                     total:count,
                     page:page,
-                    limit:limit
+                    limit:limit,
+                    totalPages: Math.ceil(count/limit)
                 }
             })
             
