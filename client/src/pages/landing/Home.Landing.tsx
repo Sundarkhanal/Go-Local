@@ -10,6 +10,7 @@ import { useAddToCart } from "../../hooks/useAddToCart";
 const Home = () => {
     const [products, setProducts ] = useState<any[]>([])
     const {handleAddToCart} = useAddToCart()
+    const [selectProduct, setSelectProduct] = useState(null)
 
     useEffect(() => {
         const fetchProducts = async() => {
@@ -23,9 +24,6 @@ const Home = () => {
         }
         fetchProducts()
     }, [])
-
-
-
     return (
         <div className="bg-[#faf7f2] min-h-screen">
 
@@ -119,6 +117,7 @@ const Home = () => {
                             price={item.price}
                             image={`http://localhost:9005/assets/${item.images}`}
                             onAdd={() => handleAddToCart(item)}
+                            onClick={() => setSelectProduct(item)}
                         />
                     ))}
                 </div>

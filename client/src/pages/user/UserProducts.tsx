@@ -9,6 +9,7 @@ export const Products = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false)
     const {handleAddToCart} = useAddToCart()
+    const [selectProduct, setSelectProduct] = useState<any>(null)
 
     const limit = 8
 
@@ -18,7 +19,6 @@ export const Products = () => {
             const res = await axiosInstance.get(`products/all-products?page=${pageNumner}&limit=${limit}`,{
                 withCredentials: true
             });
-            console.log(res.data);
             
             setProducts(res.data.data)
             setTotalPages(res.data.meta.totalPages)
@@ -61,9 +61,45 @@ return (
               description={data.description}
               category={data.category}
               onAdd={() => handleAddToCart(data)}
+              onClick={() => setSelectProduct(data)}
+              
             />
           ))}
         </div>
+
+        {selectProduct && (
+            <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                <div className="bg-white p-6 rounded-lg w-[600px] relative" onClick={(e) => e.stopPropagation() }>
+                    <button className="absolute top-2 right-2 text-xl font-bold cursor-pointer"
+                    onClick={() => setSelectProduct(null)}
+                    >
+                        ✖
+                    </button>
+                    <img
+
+                        src={`http://localhost:9005/assets/${selectProduct.images}`}
+                        className="w-full h-40 object-cover rounded"
+                        />
+
+                        <h2 className="text-xl font-bold mt-3">
+                            {selectProduct.name}
+                        </h2>
+
+                        <p className="text-gray-600">
+                            {selectProduct.description}
+                        </p>
+
+                        <p className="mt-2">
+                            Category: {selectProduct.category?.name}
+                        </p>
+
+                        <p className="text-green-600 font-bold mt-2">
+                            Nrs. {selectProduct.price}
+                        </p>
+
+                </div>
+            </div>
+        )}
 
         <div className="flex space-x-1 mt-8 justify-center">
         <button

@@ -7,6 +7,7 @@ interface IProductProps {
   description?: string;
   category?: any;
   onAdd: () => void;
+  onClick: () => void
 }
 
  export const ProductCart = ({
@@ -15,10 +16,11 @@ interface IProductProps {
   image,
   description,
   category,
-  onAdd
+  onAdd, 
+  onClick
 }: IProductProps) => {
   return (
-    <div className="bg-white rounded-xl shadow hover:shadow-xl hover:-translate-y-1 transition p-4">
+    <div onClick={onClick} className="bg-white rounded-xl shadow hover:shadow-xl hover:-translate-y-1 transition p-4 cursor-pointer">
       
 
       <img
@@ -45,7 +47,10 @@ interface IProductProps {
 
         <button
           className="px-3 py-1 bg-teal-600 text-white rounded hover:shadow cursor-pointer"
-          onClick={() => onAdd()}
+          onClick={(e) =>{
+            e.stopPropagation()
+            onAdd()
+          } }
         >
           Add
         </button>
