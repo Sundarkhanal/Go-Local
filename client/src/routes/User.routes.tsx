@@ -12,6 +12,8 @@ import { Products } from "../pages/user/UserProducts";
 import { About } from "../pages/user/About";
 import Success from "../pages/payment/Success";
 import Failure from "../pages/payment/Failure";
+import { VerifyEmail } from "../pages/auth/VerifyEmail";
+
 
 
 
@@ -20,6 +22,7 @@ function UserRoutes() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/activate-user" element={<VerifyEmail />} />
 
       <Route path="/" element={<MainLayout />}>
       <Route path="/about" element={<About />} />

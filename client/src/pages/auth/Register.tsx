@@ -30,7 +30,7 @@ const Register = () => {
     toast.success("Congratulations!", {
       description:"Your account has been registered successfully. Please login to  continue"
     })
-    navigate("/login")
+    navigate("/activate-user")
 
   } catch (error:any) {
     console.error(error.response?.data);

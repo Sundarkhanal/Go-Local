@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 interface Field{
     name: string,
     label?:string,
-    type:"text" | "number" | "file" | "select",
+    type:"text" | "number" | "file" | "select" | 'email',
     options?: any[]
 }
 
@@ -41,7 +41,7 @@ export const ResuableForm = ({fields, onSubmit, buttonText = "submit"}: IFormPro
                             {field.label}
                         </label>
                     )}
-                    {(field.type === "text" || field.type === "number") && (
+                    {(field.type === "text" || field.type === "number" || field.type === "email") && (
                         <input 
                         type={field.type}
                         name={field.name}
