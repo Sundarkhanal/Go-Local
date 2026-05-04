@@ -5,6 +5,8 @@ class PaymentController{
     initiatePayment = async(req, res, next) => {
         try {
             const userId = req.loggedInUser._id
+            console.log(userId);
+            
 
             const paidUser = await EPaymentService.initiatePayment(userId)
 

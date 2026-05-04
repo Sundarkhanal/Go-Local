@@ -2,12 +2,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   const { cart } = useCart()
   const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    toast.success("LoggedOut Successfully!")
+    navigate("/")
+  }
 
   return (
     <header className="bg-white shadow-sm relative sticky top-0 z-50">
@@ -52,8 +59,8 @@ const Navbar = () => {
 
                   {user ? (
                     <>
-                      <span className="text-teal-600 font-medium">Hello, {user.name}</span>
-                      <button onClick={logout} className="px-4 py-1 border border-red-400 text-red-500 rounded hover:bg-red-600 hover:text-white">
+                      <span className="text-teal-600 font-medium">Hello, {user?.name?.split(" ")[0] || "User"}</span>
+                      <button onClick={handleLogout} className="px-4 py-1 border border-red-400 text-red-500 rounded hover:bg-red-600 hover:text-white">
                         Logout
                       </button>
                     </>
@@ -73,25 +80,39 @@ const Navbar = () => {
 
             {menuOpen && (
               <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-md px-4 py-3 space-y-3 z-50">
-                <a href="#" className="block">About</a>
-                <a href="#" className="block">Products</a>
-                <a href="#" className="block">Categories</a>
-                <Link to="/cart">
-                    <button className="hover:shadow-md transition duration-200 cursor-pointer">
-                      Cart
-                      {cart.length > 0 && (
-                        <span className="ml-1 bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full">
-                          {cart.length}
-                        </span>
-                      )}
-                    </button>
-                  </Link>
-                     <Link to="/login">
-                        <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-teal-600 hover:text-white">Login</button>
-                      </Link>
-                      <Link to="/register">
-                        <button className="px-4 py-1 bg-teal-600 text-white rounded hover:bg-teal-900">Register</button>
-                      </Link>
+
+                <Link to="/about" className="block" onClick={() => setMenuOpen(false)}>About</Link>
+
+                <Link to="user/products" className="block" onClick={() => setMenuOpen(false)}>Products</Link>
+
+                <Link to="user/categories" className="block" onClick={() => setMenuOpen(false)}>Categories</Link>
+
+                <Link to="user/cart" onClick={() => setMenuOpen(false)}>
+                  <button className=" hover:shadow-md transition duration-200 cursor-pointer">
+                    Cart
+                    {cart.length > 0 && (
+                      <span className="ml-1 bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full">
+                        {cart.length}
+                      </span>
+                    )}
+                  </button>
+                </Link>
+
+                <div className="flex mt-5 gap-6">
+
+                <Link to="/login">
+                  <button className=" px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-teal-600 hover:text-white">
+                    Login
+                  </button>
+                </Link>
+
+                <Link to="/register">
+                  <button className=" px-4 py-1 bg-teal-600 text-white rounded hover:bg-teal-900">
+                    Register
+                  </button>
+                </Link>
+                </div>
+
               </div>
             )}
 

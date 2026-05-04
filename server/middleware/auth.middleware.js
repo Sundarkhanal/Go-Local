@@ -15,6 +15,7 @@ module.exports = (roles=null)=>{
         const data = jwt.verify( token, appConfing.jwtSecret)
         const userDetail = await userService.getSingleUserProfile({_id: data.sub});
         req.loggedInUser = userService.getPublicUserProfile(userDetail);
+        
 
         if (!roles || userDetail.role === UserRoles.ADMIN) {
             next()

@@ -3,7 +3,7 @@ import { useCart } from "../../context/CartContext";
 import { useEffect } from "react";
 import axiosInstance from "../../lib/http/axios.config";
 
-const success = () => {
+const Success = () => {
     const [params] = useSearchParams();
     const navigate = useNavigate();
     const {clearCart} = useCart()
@@ -45,4 +45,4 @@ const success = () => {
     )
 }
 
-export default success
+export default Success

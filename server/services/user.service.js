@@ -29,6 +29,7 @@ class UserService{
     }
 
     getPublicUserProfile(userobj){
+        const user = userobj.toObject()
         const {_id, name, email, role, address, phone, image, status, gender, createdAt, updatedAt} = userobj
 
         return{

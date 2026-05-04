@@ -1,12 +1,24 @@
 import { useNavigate } from "react-router";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { toast } from "sonner";
 
 const Cart = () => {
   const {cart, removeFromCart, updateCartItem, fetchCart, clearCart} = useCart()
+  const {user} = useAuth()
   const navigate = useNavigate()
-    const total = cart.reduce((sum:number, item:any) => {
+  const total = cart.reduce((sum:number, item:any) => {
         return sum + item.price * item.quantity
     }, 0)
+  const handleCheckout = () => {
+    if (!user) {
+      toast.error("Please Login to do Checkout")
+      navigate("/login")
+      return;
+    }
+    navigate("/checkout")
+  }
+
   return (
     <>
       {cart.length === 0 ? (
@@ -62,7 +74,7 @@ const Cart = () => {
 
       
       <button className="mt-4 bg-teal-600 px-4 py-2 rounded-md text-white cursor-pointer"
-      onClick={() => navigate("/checkout")}
+      onClick={handleCheckout}
        >
         Checkout
       </button>

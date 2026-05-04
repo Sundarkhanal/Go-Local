@@ -4,12 +4,13 @@ const Payment = require("../models/esewa.payment.model")
 const { generateEsewaSignature } = require("../utilities/helper")
 const OrderModel = require("../models/order.model")
 const crypto = require("crypto")
+const { log } = require("console")
 
 
 class EPaymentService{
     async initiatePayment(userId){
         try {
-            const userCart = await cartService.getCart(userId)
+            const userCart = await cartService.getCart(userId)            
             if (!userCart) {
                 throw{
                     code:404,
@@ -27,19 +28,20 @@ class EPaymentService{
                 amount:totalPrice,
                 status:"pending"
             })
+            const totalStr = String(totalPrice)
             const payload = {
-                amount:totalPrice,
+                amount: totalStr,
                 tax_amount: 0,
-                total_amount:totalPrice,
+                total_amount:totalStr,
                 transaction_uuid: transactionId,
                 product_code: process.env.ESEWA_PRODUCT_CODE,
-                success_url:"http://localhost:9005/payment/success",
-                failure_url:"http://localhost:9005/payment/failed"
+                product_service_charge: "0",
+                product_delivery_charge: "0",
+                signed_field_names: "total_amount,transaction_uuid,product_code",
+                success_url:"http://localhost:5173/payment/success",
+                failure_url:"http://localhost:5173/payment/failure"
             }
-            
-            
             payload.signature = generateEsewaSignature(payload)
-            
             const esewaUrl = `${process.env.ESEWA_GATEWAY_URL}/api/epay/main/v2/form`
             return{
                 paymentUrl: esewaUrl,

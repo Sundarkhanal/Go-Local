@@ -14,7 +14,7 @@ const Failure = () => {
       </p>
 
       <button
-        onClick={() => navigate("/cart")}
+        onClick={() => navigate("/user/cart")}
         className="mt-6 bg-red-600 text-white px-6 py-2 rounded-lg"
       >
         Back to Cart

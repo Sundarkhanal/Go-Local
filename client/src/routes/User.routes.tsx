@@ -10,6 +10,8 @@ import Checkout from "../pages/checkout/Checkout";
 import UserCategories from "../pages/user/UserCategories";
 import { Products } from "../pages/user/UserProducts";
 import { About } from "../pages/user/About";
+import Success from "../pages/payment/Success";
+import Failure from "../pages/payment/Failure";
 
 
 
@@ -30,6 +32,8 @@ function UserRoutes() {
         </Route>
 
       </Route>
+      <Route path="/payment/success" element={<Success />} />
+      <Route path="/payment/failure" element={<Failure />} />
 
     </Routes>
   );

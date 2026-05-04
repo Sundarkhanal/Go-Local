@@ -33,7 +33,7 @@ export const ResuableForm = ({fields, onSubmit, buttonText = "submit"}: IFormPro
     }
 
     return(
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4">
             {fields.map((field, i) => (
                 <div key={i}>
                     {field.label && (

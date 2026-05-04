@@ -3,6 +3,8 @@ import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../lib/http/axios.config";
 import { redirectToEsewa } from "../../lib/payment/esewa";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 const Checkout = () => {
     const{cart, clearCart} = useCart()
@@ -14,6 +16,7 @@ const Checkout = () => {
         notes:""
     })
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
     
     const total = cart.reduce((sum:number, item:any) => {
         return sum + item.productId?.price * item.quantity
@@ -24,6 +27,12 @@ const Checkout = () => {
             if (!form.fullname || !form.address || !form.phone) {
                 alert("Please Enter all fields")
                 return
+            }
+            if (!user) {
+                toast.error("Please Login to place order")
+                navigate("/login", {state: {from:"/checkout"}})
+                return
+                
             }
             setLoading(true)
 
@@ -52,13 +61,13 @@ const Checkout = () => {
             setLoading(false)
         }
     }
+
     return (
 
   <div className="bg-[#faf7f2] min-h-screen py-12 px-6">
     <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10">
 
 
-    {/* LEFT → SHIPPING FORM */}
     <div className="bg-white p-6 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-6 text-teal-600">
         Shipping Details
@@ -105,7 +114,6 @@ const Checkout = () => {
         />
     </div>
 
-    {/* RIGHT → ORDER SUMMARY */}
     <div className="bg-white p-6 rounded-xl shadow">
         <h2 className="text-xl font-bold mb-6 text-teal-600">
         Order Summary
@@ -132,7 +140,8 @@ const Checkout = () => {
         <span>Total</span>
         <span>Rs {total}</span>
         </div>
-
+        
+        
         <button
         onClick={handleOrder}
         disabled={loading}
