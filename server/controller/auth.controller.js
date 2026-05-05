@@ -245,6 +245,7 @@ class AuthController{
             await userService.updateSingleProfile(
                 { _id: user._id },
                 {
+                    status:"active",
                     password: newHashedPassword,
                     passwordResetToken: null,
                     passwordResetExpiry: null
