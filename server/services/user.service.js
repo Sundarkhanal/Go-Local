@@ -244,6 +244,17 @@ class UserService{
         `;
     }
 
+    getAllUserProfile = async(filter) =>{
+        try {
+            const userData = await UserModel.findOne(filter, {_v:0, password:0, otp:0, expiryTime:0})
+            return userData;
+            
+        } catch (exception) {
+            throw{code:500, message:exception.message ?? "Error Fetching User Profile", status:"ERR_FETCHING_PROFILE"}
+            
+        }
+    }
+
     getSingleUserProfile = async(filter) =>{
         try {
             const userData = await UserModel.findOne(filter)
