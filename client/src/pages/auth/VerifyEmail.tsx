@@ -32,7 +32,7 @@ export const VerifyEmail = () => {
     <>
     <div className="p-6">
       <h1 className="text-2xl font-bold">Verify Email</h1>
-      <div className="mb-6 bg-white p-4 rounded shadow">
+      <div className="mb-6  bg-white p-4 rounded shadow">
         <ResuableForm fields={[
           {
             name: "email",

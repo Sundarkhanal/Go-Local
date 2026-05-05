@@ -83,7 +83,7 @@ class UserService{
                     <!-- Footer -->
                     <tr>
                         <td style="background-color:#d4f7d4; text-align:center; padding:20px; font-size:12px; color:#2e7d32;">
-                        &copy; 2026 Your Company Name. All rights reserved.
+                        &copy; 2026 Go Local. All rights reserved.
                         </td>
                     </tr>
                     
@@ -159,7 +159,7 @@ class UserService{
                 <!-- Footer -->
                 <tr>
                     <td style="background-color:#d4f7d4; padding:20px; text-align:center; font-size:12px; color:#2e7d32;">
-                    © 2026 Your Company Name. All rights reserved.
+                    © 2026 Go Local. All rights reserved.
                     </td>
                 </tr>
 
@@ -229,7 +229,7 @@ class UserService{
                         <!-- Footer -->
                         <tr>
                             <td style="background-color:#d4f7d4; padding:20px; text-align:center; font-size:12px; color:#2e7d32;">
-                                © 2026 Your Company Name. All rights reserved.
+                                © 2026 GO Local. All rights reserved.
                             </td>
                         </tr>
 

@@ -209,7 +209,7 @@ class AuthController{
                 subject:"Reset Your Password",
                 message:userService.getResetPasswordMessage({
                     name:this.#userDetail.name,
-                    resetLink:`http://localhost:9005/api/v1/reset-password?token=${encodeURIComponent(resetToken)}`
+                    resetLink:`http://localhost:5173/reset-password?token=${encodeURIComponent(resetToken)}`
                 })
             })
             res.json({
@@ -223,43 +223,43 @@ class AuthController{
         }
     }
 
-   resetPassword = async (req, res, next) => {
-    try {
-        const { token, newpassword } = req.body;
+    resetPassword = async (req, res, next) => {
+        try {
+            const { token, newpassword } = req.body;
 
-        const user = await userService.getSingleUserProfile({
-            passwordResetToken: token,
-            passwordResetExpiry: { $gt: new Date() }
-        });
+            const user = await userService.getSingleUserProfile({
+                passwordResetToken: token,
+                passwordResetExpiry: { $gt: new Date() }
+            });
 
-        if (!user) {
-            throw {
-                code: 400,
-                message: "Invalid or expired token",
-                status: "INVALID-TOKEN_ERR"
-            };
-        }
-
-        const newHashedPassword = bcrypt.hashSync(newpassword, 10);
-
-        await userService.updateSingleProfile(
-            { _id: user._id },
-            {
-                password: newHashedPassword,
-                passwordResetToken: null,
-                passwordResetExpiry: null
+            if (!user) {
+                throw {
+                    code: 400,
+                    message: "Invalid or expired token",
+                    status: "INVALID-TOKEN_ERR"
+                };
             }
-        );
 
-        res.json({
-            message: "Password Reset Successfully.",
-            status: "OK"
-        });
+            const newHashedPassword = bcrypt.hashSync(newpassword, 10);
 
-    } catch (exception) {
-        next(exception);
-    }
-    };
+            await userService.updateSingleProfile(
+                { _id: user._id },
+                {
+                    password: newHashedPassword,
+                    passwordResetToken: null,
+                    passwordResetExpiry: null
+                }
+            );
+
+            res.json({
+                message: "Password Reset Successfully.",
+                status: "OK"
+            });
+
+        } catch (exception) {
+            next(exception);
+        }
+        };
 
     logout = (req, res, next) =>{
         try {

@@ -4,6 +4,7 @@ import axiosInstance from "../../lib/http/axios.config"
 import { useAuth } from "../../context/AuthContext"
 import { useCart } from "../../context/CartContext" 
 import { toast } from "sonner"
+import axios from "axios"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -33,7 +34,13 @@ const Login = () => {
       })
       navigate(from, { replace: true })
     } catch (error: any) {
-      console.log(error.response?.data)
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message
+        console.log(message);
+        toast.error(message || "Error in Verifying Email")
+      } else {
+        toast.error("Something went wrong!")
+      }
     }
   }
   // useEffect(() => {
@@ -68,7 +75,7 @@ const Login = () => {
         />
 
         <div className="text-right mb-4">
-          <span className="text-sm text-teal-600 cursor-pointer hover:underline">
+          <span  className="text-sm text-teal-600 cursor-pointer hover:underline" onClick={() => navigate("/forget-password")}>
             Forgot Password?
           </span>
         </div>

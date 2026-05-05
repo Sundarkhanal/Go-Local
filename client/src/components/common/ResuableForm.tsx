@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 interface Field{
     name: string,
     label?:string,
-    type:"text" | "number" | "file" | "select" | 'email',
+    type:"text" | "number" | "file" | "select" | 'email' | "password",
     options?: any[]
 }
 
@@ -52,6 +52,14 @@ export const ResuableForm = ({fields, onSubmit, buttonText = "submit"}: IFormPro
                     {field.type === "file" && (
                         <input
                         type="file"
+                        name={field.name}
+                        onChange={(e) => handleChange(e, field)}
+                        className="border p-2 rounded w-full"
+                        />
+                    )}
+                    {field.type === "password" && (
+                        <input
+                        type="password"
                         name={field.name}
                         onChange={(e) => handleChange(e, field)}
                         className="border p-2 rounded w-full"

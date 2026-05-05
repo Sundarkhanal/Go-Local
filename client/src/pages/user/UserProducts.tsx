@@ -39,6 +39,7 @@ return (
 
     {loading ? (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        
         {Array.from({ length: products.length }).map((_, i) => (
           <div
             key={i}

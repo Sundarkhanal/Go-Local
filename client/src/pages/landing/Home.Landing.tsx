@@ -122,6 +122,8 @@ const Home = () => {
                             key={item._id}
                             name={item.name}
                             price={item.price}
+                            description={item.description}
+                            category={item.category}
                             image={`http://localhost:9005/assets/${item.images}`}
                             onAdd={() => handleAddToCart(item)}
                             onClick={() => setSelectProduct(item)}

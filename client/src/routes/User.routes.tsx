@@ -13,6 +13,8 @@ import { About } from "../pages/user/About";
 import Success from "../pages/payment/Success";
 import Failure from "../pages/payment/Failure";
 import { VerifyEmail } from "../pages/auth/VerifyEmail";
+import { ForgetPassword } from "../pages/auth/ForgetPassword";
+import { ResetPassword } from "../pages/auth/ResetPassword";
 
 
 
@@ -23,6 +25,8 @@ function UserRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/activate-user" element={<VerifyEmail />} />
+      <Route path="/forget-password" element={<ForgetPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route path="/" element={<MainLayout />}>
       <Route path="/about" element={<About />} />
