@@ -8,11 +8,9 @@ import { AddProducts } from "../pages/admin/AddProducts";
 import { EditProducts } from "../pages/admin/EditProduct";
 
 
-const AdminRoutes = () => {
+export const AdminRoutes = () => {
   return (
     <Routes>
-      
-      {/* ADMIN ROUTES */}
       <Route path="/" element={<ProtectedRoute role = "admin"> <AdminLayout /></ProtectedRoute>}>
         <Route index element={<Dashboard />} />
         <Route path="products" element={<Product/>} />
@@ -24,5 +22,3 @@ const AdminRoutes = () => {
     </Routes>
   );
 };
-
-export default AdminRoutes;

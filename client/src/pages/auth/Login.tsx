@@ -32,7 +32,7 @@ const Login = () => {
       toast.success("Logged In successfully", {
         description: "Your account has been successfully logged In"
       })
-      navigate(from, { replace: true })
+      navigate(from, { replace: true }) //it’s used for redirecting users back to where they came from after login.
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         const message = error.response?.data?.message
@@ -75,7 +75,7 @@ const Login = () => {
         />
 
         <div className="text-right mb-4">
-          <span  className="text-sm text-teal-600 cursor-pointer hover:underline" onClick={() => navigate("/forget-password")}>
+          <span  className="text-sm text-teal-600 cursor-pointer hover:underline" onClick={() => navigate("/auth/forget-password")}>
             Forgot Password?
           </span>
         </div>
@@ -90,7 +90,7 @@ const Login = () => {
         <p className="text-center text-sm text-gray-500 mt-4">
           Don't have an account?{" "}
           <span
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/auth/register")}
             className="text-teal-600 cursor-pointer hover:underline cursor-pointer"
           >
             Register

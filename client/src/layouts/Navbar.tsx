@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { toast } from "sonner";
 
-const Navbar = () => {
+export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   const { cart } = useCart()
@@ -66,10 +66,10 @@ const Navbar = () => {
                     </>
                   ) : (
                     <>
-                      <Link to="/login">
+                      <Link to="/auth/login">
                         <button className="px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-teal-600 hover:text-white">Login</button>
                       </Link>
-                      <Link to="/register">
+                      <Link to="/auth/register">
                         <button className="px-4 py-1 bg-teal-600 text-white rounded hover:bg-teal-900">Register</button>
                       </Link>
                     </>
@@ -100,13 +100,13 @@ const Navbar = () => {
 
                 <div className="flex mt-5 gap-6">
 
-                <Link to="/login">
+                <Link to="/auth/login">
                   <button className=" px-4 py-1 border border-teal-300 text-teal-600 rounded hover:bg-teal-600 hover:text-white">
                     Login
                   </button>
                 </Link>
 
-                <Link to="/register">
+                <Link to="/auth/register">
                   <button className=" px-4 py-1 bg-teal-600 text-white rounded hover:bg-teal-900">
                     Register
                   </button>
@@ -125,5 +125,3 @@ const Navbar = () => {
     </header>
   );
 };
-
-export default Navbar;

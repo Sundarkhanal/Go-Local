@@ -46,15 +46,12 @@ const Register = () => {
       Create Account
     </h2>
 
-    {/* Name */}
     <input
       type="text"
       placeholder="Full Name"
       className="w-full mb-3 px-4 py-2 border rounded"
       onChange={(e) => setForm({ ...form, name: e.target.value })}
     />
-
-    {/* Email */}
     <input
       type="email"
       placeholder="Email"
@@ -62,7 +59,6 @@ const Register = () => {
       onChange={(e) => setForm({ ...form, email: e.target.value })}
     />
 
-    {/* Phone */}
     <input
       type="text"
       placeholder="Phone (optional)"
@@ -70,7 +66,6 @@ const Register = () => {
       onChange={(e) => setForm({ ...form, phone: e.target.value })}
     />
 
-    {/* Password */}
     <input
       type="password"
       placeholder="Password"
@@ -78,7 +73,6 @@ const Register = () => {
       onChange={(e) => setForm({ ...form, password: e.target.value })}
     />
 
-    {/* Confirm Password */}
     <input
       type="password"
       placeholder="Confirm Password"
@@ -86,7 +80,6 @@ const Register = () => {
       onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
     />
 
-    {/* Gender */}
     <select
       className="w-full mb-3 px-4 py-2 border rounded"
       onChange={(e) => setForm({ ...form, gender: e.target.value })}
@@ -97,14 +90,12 @@ const Register = () => {
       <option value="others">Others</option>
     </select>
 
-    {/* Address */}
     <textarea
       placeholder="Address"
       className="w-full mb-3 px-4 py-2 border rounded"
       onChange={(e) => setForm({ ...form, address: e.target.value })}
     />
 
-    {/* Image URL */}
     <input
       type="text"
       placeholder="Image (optional)"
@@ -112,7 +103,6 @@ const Register = () => {
       onChange={(e) => setForm({ ...form, image: e.target.value })}
     />
 
-    {/* Button */}
     <button
       onClick={handleRegister}
       className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700 transition"
@@ -122,7 +112,7 @@ const Register = () => {
 
     <h3 className="text-center text-sm text-gray-500 mt-4">
       Already have an account? {" "}
-      <span onClick={() => navigate("/login")}
+      <span onClick={() => navigate("/auth/login")}
       className="text-teal-600 cursor-pointer hover:underline cursor-pointer"
         >Login</span>
     </h3>

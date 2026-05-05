@@ -4,8 +4,6 @@ import { Sidebar } from "../../components/admin/Sidebar";
 const AdminLayout = () => {
   return (
     <div className="flex min-h-screen">
-      
-      {/* Sidebar */}
       <Sidebar />
       
       {/* Main Content */}

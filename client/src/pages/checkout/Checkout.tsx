@@ -30,7 +30,7 @@ const Checkout = () => {
             }
             if (!user) {
                 toast.error("Please Login to place order")
-                navigate("/login", {state: {from:"/checkout"}})
+                navigate("/auth/login", {state: {from:"/checkout"}})
                 return
                 
             }

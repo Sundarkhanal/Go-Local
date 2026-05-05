@@ -2,8 +2,10 @@
 import hero from "../../assets/images/hero.png";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../lib/http/axios.config";
-import { ProductCart } from "../../components/ProductCart";
+
 import { useAddToCart } from "../../hooks/useAddToCart";
+import { ProductCart } from "../../components/ProductCart";
+
 
 
 
@@ -74,15 +76,6 @@ const Home = () => {
                     </div>
                 </div>
 
-                                {/* RIGHT VISUAL */}
-                {/* <div className="w-1/2 flex justify-center items-center">
-                <div className="relative w-[520px] h-[520px] bg-teal-400 rounded-[60%_40%_55%_45%_/_55%_45%_60%_40%] flex items-end justify-center overflow-hidden">
-                    <img
-                    src={hero}
-                    className="w-[90%] h-[90%] object-cover"
-                    />
-                </div>
-                </div> */}
                 <div className="w-1/2 flex justify-center items-center">
                 <div className="relative w-[500px] h-[500px] rounded-full bg-teal-100 ring-8 ring-teal-400 overflow-hidden">
                     <img

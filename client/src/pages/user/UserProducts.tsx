@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axiosInstance from "../../lib/http/axios.config";
-import { ProductCart } from "../../components/ProductCart";
 import { useAddToCart } from "../../hooks/useAddToCart";
+import { ProductCart } from "../../components/ProductCart";
 
 export const Products = () => {
     const [products, setProducts] = useState<any []>([]);

@@ -1,24 +1,19 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom"
+import { AdminRoutes } from "./routes/Admin.routes"
+import { UserRoutes } from "./routes/User.routes"
+import { AuthRoutes } from "./routes/AuthRoutes"
+import PaymentRoutes from "./routes/PaymentRoutes"
 
 
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import UserRoutes from "./routes/User.routes";
-import AdminRoutes from "./routes/Admin.routes";
-
-function App() {
+function AppRoutes() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      {/* admin routes */}
-      <Route path="/admin/*" element={<AdminRoutes/>} />
-
-      {/* user routes */}
+      <Route path="/admin/*" element={<AdminRoutes />} />
+      <Route path="/auth/*" element={<AuthRoutes />} />
+      <Route path="/payment/*" element={<PaymentRoutes />} />
       <Route path="/*" element={<UserRoutes />} />
-
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default AppRoutes
