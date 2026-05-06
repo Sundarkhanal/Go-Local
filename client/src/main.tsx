@@ -5,6 +5,8 @@ import { AuthProvider } from './context/AuthContext.tsx'
 import { CartProvider } from './context/CartContext.tsx'
 import { Toaster } from 'sonner'
 import App from './App.tsx'
+import {Provider} from "react-redux"
+import store from './config/store.config.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -12,7 +14,9 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <CartProvider>
        <Toaster richColors />
+       <Provider store={store}>
         <App />
+       </Provider>
       </CartProvider>
     </BrowserRouter>
   </AuthProvider>
