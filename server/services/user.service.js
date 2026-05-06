@@ -246,7 +246,7 @@ class UserService{
 
     getAllUserProfile = async(filter) =>{
         try {
-            const userData = await UserModel.findOne(filter, {_v:0, password:0, otp:0, expiryTime:0})
+            const userData = await UserModel.find(filter, {_v:0, password:0, otp:0, expiryTime:0})
             return userData;
             
         } catch (exception) {

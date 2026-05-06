@@ -11,8 +11,10 @@ class ChatController{
             if (req.query.search) {
                 filter = {
                     ...filter,
-                    name: new RegExp(req.query.search, "i"),
-                    email: new RegExp(req.query.search, "i")
+                    $or: [
+                        {name: new RegExp(req.query.search, "i")},
+                        {email: new RegExp(req.query.search, "i")}
+                    ]
                 }
             }
             const data = await userService.getAllUserProfile(filter)

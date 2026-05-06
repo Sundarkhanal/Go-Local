@@ -3,11 +3,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useRedux"
 import { toast } from "sonner"
 import axiosInstance from "../../lib/http/axios.config"
 import { addMessage } from "../../reducers/ChatReducer"
+import { socket } from "../../lib/socket/socket"
+import { useAuth } from "../../context/AuthContext"
 
 export const ChatInput = () => {
     const [text, setText] = useState("")
     const dispatch = useAppDispatch()
     const selectedUser = useAppSelector((s) => s.chat.selectedUser)
+    const {user} = useAuth()
     
     const handleSend = async() => {
         if (!text.trim()) {
@@ -18,11 +21,20 @@ export const ChatInput = () => {
             return;
         }
         try {
-            const res = await axiosInstance.post("/chat", {
-                receiverId: selectedUser._id,
-                text
+            const res = await axiosInstance.post("/chat/", {
+                receiver: selectedUser._id,
+                message: text
             });
-            dispatch(addMessage(res.data.data))
+            const message = res.data.data
+            dispatch(addMessage(message))
+
+            socket.emit("send_message", {
+            receiverId: selectedUser._id,
+            senderId: user._id,
+            text: message.text,
+            _id: message._id,
+            });
+
             setText("")
         } catch (error) {
             console.log(error);
