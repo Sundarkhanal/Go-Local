@@ -67,7 +67,6 @@ const ChatSidebar = () => {
         </div>
       </div>
 
-      {/* User List */}
       <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-0.5">
         {users.length === 0 ? (
           <p className="text-sm text-gray-400 text-center mt-8">No users found</p>

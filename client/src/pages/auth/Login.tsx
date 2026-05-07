@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext"
 import { useCart } from "../../context/CartContext" 
 import { toast } from "sonner"
 import axios from "axios"
+import { socket } from "../../lib/socket/socket"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -22,6 +23,9 @@ const Login = () => {
       await axiosInstance.post("auth/login", form)
       const userProfile = await axiosInstance.get("auth/me")
       login(userProfile.data.data)
+
+      socket.connect();
+      socket.emit("join", user._id)
 
       const savedCart = localStorage.getItem("guest_cart")
       if (savedCart) {

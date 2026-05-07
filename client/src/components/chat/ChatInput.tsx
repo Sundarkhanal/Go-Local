@@ -31,8 +31,9 @@ export const ChatInput = () => {
             socket.emit("send_message", {
             receiverId: selectedUser._id,
             senderId: user._id,
-            text: message.text,
+            message: message.message,
             _id: message._id,
+            createdAt: new Date().toISOString()
             });
 
             setText("")

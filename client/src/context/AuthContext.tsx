@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import axiosInstance from "../lib/http/axios.config"
-import { useNavigate } from "react-router"
+import { socket } from "../lib/socket/socket"
 
 interface IAuthContextType {
   user: any
@@ -32,7 +32,9 @@ export const AuthProvider = ({ children }: any) => {
 
   const logout = async () => {
     await axiosInstance.post("auth/logout")
+    socket.disconnect()
     setUser(null)
+
   }
 
   useEffect(() => {

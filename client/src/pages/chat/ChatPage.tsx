@@ -9,7 +9,11 @@ export const ChatPage = () => {
 
     useEffect(() => {
         if (user?._id) {
+            socket.connect()
             socket.emit("join", user._id)
+        }
+        return () => {
+            socket.disconnect()
         }
     }, [user])
     return(
