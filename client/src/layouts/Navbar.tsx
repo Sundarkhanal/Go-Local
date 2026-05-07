@@ -59,11 +59,19 @@ export const Navbar = () => {
 
                   {user ? (
                     <>
+                    <div className="flex items-center gap-4">
+                      <Link to="/chat">
+                      <div className="relative cursor-pointer p-2 hover:bg-teal-100 rounded full">
+                        💬
+                      </div>
+                      </Link>
                       <span className="text-teal-600 font-medium">Hello, {user?.name?.split(" ")[0] || "User"}</span>
                       <button onClick={handleLogout} className="px-4 py-1 border border-red-400 text-red-500 rounded hover:bg-red-600 hover:text-white">
                         Logout
                       </button>
+                    </div>
                     </>
+
                   ) : (
                     <>
                       <Link to="/auth/login">
