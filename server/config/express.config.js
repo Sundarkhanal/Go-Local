@@ -9,9 +9,10 @@ const {rateLimit} = require("express-rate-limit")
 
 const app = express()
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials: true
-}))
+  origin: 'https://go-local.vercel.app', // your actual Vercel URL
+  credentials: true
+
+}));
 
 /// xxs policy
 app.use(helmet({
