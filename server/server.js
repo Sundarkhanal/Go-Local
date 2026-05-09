@@ -8,7 +8,7 @@ const { Server } = require("socket.io")
 //creating socket server
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://go-local-five.vercel.app",
     credentials: true, 
   },
 });
