@@ -3,7 +3,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { ChatInput } from "./ChatInput";
 import { useEffect, useRef } from "react";
 import { socket } from "../../lib/socket/socket";
-import { addMessage } from "../../reducers/ChatReducer";
+import { addMessage, increaseUnread } from "../../reducers/ChatReducer";
 import { format, isToday, isYesterday } from "date-fns";
 import { useAuth } from "../../context/AuthContext";
 
@@ -15,21 +15,22 @@ const ChatWindow = () => {
 
   useEffect(() => {
     const handleReceiveMessage = (data:any) => {
-      console.log("received_message",data);
       const formattedMessage = {
         ...data,
         message: data.message || data.text || ""
       }
       
       dispatch(addMessage(formattedMessage))
+    if (data.senderId !== selectedUser?._id) {
+      dispatch(increaseUnread());
     }
-      socket.off("receive_message");
+    }
       socket.on("receive_message", handleReceiveMessage);
 
       return () => {
         socket.off("receive_message", handleReceiveMessage)
       };
-    }, []);
+    }, [selectedUser]);
 
   //Auto scroll to latest message
   useEffect(() => {

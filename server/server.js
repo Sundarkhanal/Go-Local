@@ -21,7 +21,6 @@ io.on("connection", (socket) => {
     socket.join(userId);
   });
 
-  // send message
   socket.on("send_message", (data) => {
     const { receiverId } = data;
 
@@ -37,10 +36,10 @@ io.on("connection", (socket) => {
 });
 
 
-const PORT = 9005;
+const PORT = process.env.PORT || 9005;
 const HOST = "localhost";
 
-server.listen(PORT, HOST, (e)=> {
+server.listen(PORT, '0.0.0.0', (e)=> {
     if (!e) {
         console.log("Server is running on"+PORT+", and Host "+HOST);
         console.log("***Press Ctrl + C to disconnect the server***");

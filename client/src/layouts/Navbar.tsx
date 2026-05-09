@@ -3,12 +3,15 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { toast } from "sonner";
+import { useAppSelector } from "../hooks/useRedux";
+
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   const { cart } = useCart()
   const navigate = useNavigate()
+  const { unreadCount } = useAppSelector((s) => s.chat);
 
   const handleLogout = () => {
     logout()
@@ -63,6 +66,11 @@ export const Navbar = () => {
                       <Link to="/chat">
                       <div className="relative cursor-pointer p-2 hover:bg-teal-100 rounded full">
                         💬
+                        {unreadCount > 0 && (
+                          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 rounded-full">
+                            {unreadCount}
+                          </span>
+                        )}
                       </div>
                       </Link>
                       <span className="text-teal-600 font-medium">Hello, {user?.name?.split(" ")[0] || "User"}</span>

@@ -9,12 +9,14 @@ interface User {
 interface ChatState{
     users: User[],
     messages: any[];
-    selectedUser: any | null
+    selectedUser: any | null,
+    unreadCount:any
 }
 const initialState:ChatState ={
     users: [],
     messages:[],
-    selectedUser: null
+    selectedUser: null,
+    unreadCount: 0
 }
 
 const chatSlice = createSlice({
@@ -32,10 +34,17 @@ const chatSlice = createSlice({
         },
         addMessage: (state, action) => {
             state.messages.push(action.payload)
+        },
+        increaseUnread: (state) => {
+        state.unreadCount += 1;
+        },
+
+        resetUnread: (state) => {
+        state.unreadCount = 0;
         }
     }
 
 });
 
-export const {setUsers, setMessages, setSelectedUser, addMessage} = chatSlice.actions
+export const {setUsers, setMessages, setSelectedUser, addMessage, increaseUnread, resetUnread} = chatSlice.actions
 export default chatSlice.reducer
