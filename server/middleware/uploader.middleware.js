@@ -1,45 +1,28 @@
 const multer = require("multer")
-const fs = require("fs")
+const { CloudinaryStorage } = require("multer-storage-cloudinary")
+const cloudinary = require("cloudinary").v2
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 const uploader = () => {
+  const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: "go-local",
+      allowed_formats: ["jpg", "jpeg", "png", "svg", "bmp", "webp", "gif"],
+    },
+  })
 
-    const storageConfig = multer.diskStorage({
-        destination: (req, file, cb) => {
-            const path = "./public/uploads/"
-            if (!fs.existsSync(path)) {
-                fs.mkdirSync(path, { recursive: true })
-            }
-            cb(null, path)
-        },
-        filename: (req, file, cb) => {
-            const filename = Date.now() + "-" + file.originalname
-            cb(null, filename)
-        }
-    })
-
-    const customFilefilter = (req, file, cb) => {
-        const ext = file.originalname.split(".").pop().toLowerCase()
-
-        if (["img", "jpg", "jpeg", "png", "svg", "bmp", "webp", "gif"].includes(ext)) {
-            cb(null, true)
-        } else {
-            cb({ 
-                code: 422, 
-                message: "File Format not supported", 
-                status: "FILE_FORMAT_NOT_SUPPORTED_ERR" 
-            })
-        }
-    }
-
-
-    return multer({
-        storage: storageConfig,
-        fileFilter: customFilefilter,
-        limits: {
-            fileSize: 5 * 1024 * 1024
-        }
-    })
+  return multer({
+    storage: storage,
+    limits: {
+      fileSize: 5 * 1024 * 1024,
+    },
+  })
 }
 
 module.exports = uploader
-

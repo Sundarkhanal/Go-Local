@@ -1,6 +1,6 @@
 const authRouter = require("express").Router()
 const authCtrl = require("../controller/auth.controller")
-const uploader = require("../middleware/uploader.middleware")
+const uploader = require("../middleware/uploader1.middleware")
 const {RegisterDTO, OTPVerifyDTO, LoginDTO }= require("../rules/auth.rule")
 const validator = require("../middleware/validator.middleware")
 const checkPermission = require("../middleware/auth.middleware")
