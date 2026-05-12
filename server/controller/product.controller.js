@@ -12,7 +12,7 @@ class ProductController{
             });
         }
             const data = req.body
-            data.images = req.file.filename
+            data.images = req.file.path
             
 
             const product = await ProductService.store(data)
