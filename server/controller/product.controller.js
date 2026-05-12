@@ -12,7 +12,7 @@ class ProductController{
             });
         }
             const data = req.body
-            data.images = req.file.path
+            data.images = data.images = req.file.path || `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${req.file.filename}`
             
 
             const product = await ProductService.store(data)
