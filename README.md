@@ -12,7 +12,9 @@ Live demo: [go-local-five.vercel.app](https://go-local-five.vercel.app)
 - Browse locally sourced food products
 - View product details with images
 - Add to cart and place orders
+- Makes Payment
 - Real-time order status updates
+- Real-time communicaion
 
 ### 🔐 Admin
 - Secure admin dashboard
