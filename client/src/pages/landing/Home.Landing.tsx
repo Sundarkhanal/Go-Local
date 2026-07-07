@@ -117,7 +117,7 @@ const Home = () => {
                             price={item.price}
                             description={item.description}
                             category={item.category}
-                            image={`http://localhost:9005/assets/${item.images}`}
+                            image={item.images}
                             onAdd={() => handleAddToCart(item)}
                             onClick={() => setSelectProduct(item)}
                         />

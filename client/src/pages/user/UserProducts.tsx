@@ -58,7 +58,7 @@ return (
               key={data._id}
               name={data.name}
               price={data.price}
-              image={`http://localhost:9005/assets/${data.images}`}
+              image={data.images}
               description={data.description}
               category={data.category}
               onAdd={() => handleAddToCart(data)}

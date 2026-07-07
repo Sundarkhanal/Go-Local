@@ -51,7 +51,7 @@ const ProductsTable = ({products, loading, fetchProducts}:IProductsTableProps) =
             <tr key={item._id} className="border-b">
                 <td className="p-4">{item.name}</td>
                 <td className="p-4">
-                    <img src={`http://localhost:9005/assets/${item.images}`} className="w-12 h-12 rounded" />
+                    <img src={item.images} className="w-12 h-12 rounded" />
                 </td>
                 <td className="p-4 ">
 
